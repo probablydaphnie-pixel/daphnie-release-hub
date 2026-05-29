@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Daphnie Release Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -14,32 +14,27 @@
   --border:#2e3238;--border2:#383d44;
   --text:#e8eaed;--text2:#9aa0ab;--text3:#5a6072;
   --green:#34d399;--green-bg:#0d2b20;--green-border:#1a4a35;
-  --red:#f87171;--red-bg:#2b0d0d;
-  --amber:#fbbf24;--amber-bg:#2b2008;
-  --blue:#60a5fa;--blue-bg:#0d1b2b;
+  --red:#f87171;--red-bg:#2b1010;
+  --amber:#fbbf24;--amber-bg:#27200a;--amber-border:#4a3a10;
+  --blue:#60a5fa;--blue-bg:#0d1b2b;--blue-border:#1a3050;
+  --purple:#a78bfa;--purple-bg:#1a1130;
   --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
   --r:10px;--r-sm:6px;--r-lg:14px;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;}
 input,select,textarea{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-family:var(--font);font-size:13px;padding:7px 10px;outline:none;width:100%;}
-input:focus,select:focus{border-color:#4a5568;}
-input[type=range]{padding:0;background:transparent;-webkit-appearance:none;height:4px;border-radius:2px;border:none;cursor:pointer;}
-input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--bg4);border-radius:2px;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--green);margin-top:-5px;cursor:pointer;}
+input:focus,select:focus,textarea:focus{border-color:#4a5568;}
+textarea{resize:vertical;min-height:120px;line-height:1.6;font-family:var(--mono);font-size:12px;}
+select option{background:var(--bg3);}
 button{font-family:var(--font);cursor:pointer;}
-pre{font-family:var(--mono);}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
-
-/* LAYOUT */
 .shell{display:grid;grid-template-columns:220px 1fr;height:100vh;overflow:hidden;}
 .sidebar{background:var(--bg2);border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
 .main{overflow-y:auto;padding:28px 32px;}
-
-/* SIDEBAR */
-.logo{padding:22px 18px 16px;border-bottom:0.5px solid var(--border);}
-.logo-word{font-size:13px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);display:block;}
+.logo{padding:20px 18px 14px;border-bottom:0.5px solid var(--border);}
+.logo-word{font-size:13px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;display:block;}
 .logo-sub{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);}
-.nav{padding:12px 10px;flex:1;overflow-y:auto;}
+.nav{padding:10px 10px;flex:1;overflow-y:auto;}
 .nav-section{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);padding:10px 8px 5px;font-weight:500;}
 .nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:7px 10px;border:none;background:transparent;color:var(--text2);border-radius:var(--r-sm);font-size:13px;text-align:left;transition:all 0.12s;}
 .nav-btn:hover{background:var(--bg3);color:var(--text);}
@@ -48,181 +43,151 @@ pre{font-family:var(--mono);}
 .nav-song{padding:4px 8px 4px 36px;font-size:12px;color:var(--text3);border-radius:var(--r-sm);cursor:pointer;transition:all 0.1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .nav-song:hover{color:var(--text2);}
 .nav-song.active{color:var(--green);}
-.sidebar-bottom{padding:14px;border-top:0.5px solid var(--border);}
-
-/* PAGE HEADER */
+.sidebar-bottom{padding:12px;border-top:0.5px solid var(--border);display:flex;flex-direction:column;gap:5px;}
 .page-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px;}
-.page-sub{font-size:13px;color:var(--text3);margin-bottom:24px;}
-
-/* CARDS */
+.page-sub{font-size:13px;color:var(--text3);margin-bottom:22px;}
 .card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
-.card-sm{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;}
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
 .stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;}
 .stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
-.stat-value{font-size:22px;font-weight:600;font-family:var(--mono);}
+.stat-value{font-size:20px;font-weight:600;font-family:var(--mono);}
 .stat-value.green{color:var(--green);}
 .stat-value.amber{color:var(--amber);}
-
-/* SONG LIST */
 .song-row{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all 0.12s;margin-bottom:5px;}
 .song-row:hover{border-color:var(--border2);background:var(--bg3);}
-.song-row-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.song-row-title{font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px;}
 .song-row-sub{font-size:11px;color:var(--text3);margin-bottom:8px;}
 .bar{height:3px;background:var(--bg4);border-radius:2px;}
 .bar-fill{height:100%;border-radius:2px;transition:width 0.4s ease;}
 .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 9px;border-radius:100px;font-family:var(--mono);letter-spacing:0.03em;}
 .badge.green{background:var(--green-bg);color:var(--green);border:0.5px solid var(--green-border);}
 .badge.gray{background:var(--bg4);color:var(--text3);}
-
-/* TABS */
+.badge.amber{background:var(--amber-bg);color:var(--amber);border:0.5px solid var(--amber-border);}
+.badge.blue{background:var(--blue-bg);color:var(--blue);border:0.5px solid var(--blue-border);}
+.badge.purple{background:var(--purple-bg);color:var(--purple);}
 .tabs{display:flex;gap:3px;background:var(--bg3);border-radius:var(--r-sm);padding:3px;margin-bottom:20px;width:fit-content;}
 .tab-btn{padding:5px 14px;font-size:12px;border:none;border-radius:5px;background:transparent;color:var(--text3);font-family:var(--font);transition:all 0.12s;font-weight:400;}
 .tab-btn.active{background:var(--bg2);color:var(--text);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,0.4);}
-
-/* FORM ROWS */
 .field{margin-bottom:12px;}
-.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px;font-weight:500;}
+.field label,.field-lbl{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px;font-weight:500;}
 .field-row{display:grid;gap:10px;}
-.field-row.col2{grid-template-columns:1fr 1fr;}
-.field-row.col3{grid-template-columns:1fr 1fr 1fr;}
-
-/* BUTTONS */
+.col2{grid-template-columns:1fr 1fr;}
+.col3{grid-template-columns:1fr 1fr 1fr;}
 .btn{padding:8px 16px;border-radius:var(--r-sm);font-size:13px;font-family:var(--font);border:0.5px solid;transition:all 0.12s;}
 .btn-primary{background:var(--bg4);border-color:var(--border2);color:var(--text);font-weight:500;}
 .btn-primary:hover{background:#30363f;}
 .btn-ghost{background:transparent;border-color:var(--border);color:var(--text2);}
 .btn-ghost:hover{border-color:var(--border2);color:var(--text);}
 .btn-green{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+.btn-danger{background:var(--red-bg);border-color:transparent;color:var(--red);}
 .btn-sm{padding:5px 12px;font-size:12px;}
-
-/* BACK BTN */
+.btn-xs{padding:3px 9px;font-size:11px;}
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:transparent;border:none;padding:0 0 14px;transition:color 0.1s;}
 .back-btn:hover{color:var(--text2);}
-
-/* RECOUP BAR */
 .recoup-box{border-radius:var(--r);padding:12px 15px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
 .recoup-box.recouped{background:var(--green-bg);border:0.5px solid var(--green-border);}
 .recoup-box.pending{background:var(--bg3);border:0.5px solid var(--border);}
-
-/* GRID STATS */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
 .mini-stat{background:var(--bg3);border-radius:var(--r-sm);padding:10px 12px;}
 .mini-stat-label{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px;}
 .mini-stat-value{font-size:15px;font-weight:600;font-family:var(--mono);}
-
-/* TABLE */
-.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl-wrap{border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;}
 .tbl th{padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-weight:500;background:var(--bg3);border-bottom:0.5px solid var(--border);}
-.tbl td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text2);}
+.tbl td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tbl tr:last-child td{border-bottom:none;}
 .tbl td:first-child{color:var(--text);}
-.tbl-wrap{border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
-
-/* TX LIST */
 .tx-section{border:0.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:10px;overflow:hidden;}
 .tx-header{padding:11px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.1s;}
-.tx-header:hover{background:var(--bg3);}
-.tx-header.open{background:var(--bg3);}
+.tx-header:hover,.tx-header.open{background:var(--bg3);}
 .tx-body{border-top:0.5px solid var(--border);padding:12px 14px;}
 .tx-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--border);}
 .tx-row:last-of-type{border-bottom:none;}
-.tx-desc{font-size:12px;color:var(--text);}
-.tx-meta{font-size:10px;color:var(--text3);font-family:var(--mono);}
-.tx-amount{font-size:13px;font-weight:500;font-family:var(--mono);}
 .tx-del{background:transparent;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;}
 .tx-del:hover{color:var(--red);}
 .tx-add-form{margin-top:12px;border-top:0.5px solid var(--border);padding-top:12px;}
-
-/* EMAIL */
 .email-item{border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:5px;overflow:hidden;}
 .email-header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.1s;}
-.email-header:hover{background:var(--bg3);}
-.email-header.open{background:var(--bg3);}
-.email-title{font-size:13px;font-weight:500;color:var(--text);}
-.email-when{font-size:10px;color:var(--text3);}
-.email-body{border-top:0.5px solid var(--border);padding:14px;}
-.email-subject{font-size:12px;color:var(--text2);margin-bottom:10px;}
+.email-header:hover,.email-header.open{background:var(--bg3);}
+.email-body-wrap{border-top:0.5px solid var(--border);padding:14px;}
 .email-pre{font-size:12px;color:var(--text);background:var(--bg3);padding:12px 14px;border-radius:var(--r-sm);white-space:pre-wrap;line-height:1.7;margin-bottom:10px;font-family:var(--mono);}
-
-/* TIMELINE */
-.tl-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;border-radius:var(--r-sm);margin-bottom:2px;transition:opacity 0.1s;}
-.tl-label{font-size:13px;}
+.tl-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;border-radius:var(--r-sm);margin-bottom:2px;}
 .tl-date{font-size:12px;color:var(--text3);font-family:var(--mono);}
-
-/* SLIDER LABELS */
-.slider-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);margin-top:3px;}
-
-/* ADD SONG FORM */
-.add-form{border:0.5px dashed var(--border2);border-radius:var(--r-lg);padding:16px;margin-top:6px;}
-.add-form-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px;}
-
-/* SEARCH */
 .search-row{display:flex;gap:8px;margin-bottom:14px;}
-.search-row input{flex:1;}
-
-/* DISTRO SLIDER */
-.dist-box{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:14px;}
-.dist-top{display:flex;justify-content:space-between;margin-bottom:8px;}
-.dist-pct{font-size:15px;font-weight:600;font-family:var(--mono);color:var(--amber);}
-
-/* TOOLTIP */
-.tip{font-size:10px;color:var(--text3);margin-top:4px;}
-
-@media(max-width:700px){
-  .shell{grid-template-columns:1fr;}
-  .sidebar{display:none;}
-  .main{padding:16px;}
-  .stat-grid{grid-template-columns:1fr 1fr;}
-  .grid2{grid-template-columns:1fr;}
-}
+.section-lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;font-weight:500;}
+.distro-note{font-size:12px;padding:10px 13px;border-radius:var(--r-sm);margin-top:-4px;margin-bottom:14px;line-height:1.5;}
+.distro-note.self{background:var(--bg3);color:var(--text2);}
+.distro-note.shared{background:var(--amber-bg);color:var(--amber);border:0.5px solid var(--amber-border);}
+.distro-note.third{background:var(--blue-bg);color:var(--blue);border:0.5px solid var(--blue-border);}
+.writing-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;}
+.writing-card-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;transition:background 0.1s;}
+.writing-card-header:hover{background:var(--bg3);}
+.writing-card-body{border-top:0.5px solid var(--border);padding:14px;}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.finance-row{display:grid;grid-template-columns:90px 60px 1fr 90px 110px 24px;gap:8px;align-items:center;padding:8px 12px;border-bottom:0.5px solid var(--border);font-size:12px;}
+.finance-row:last-child{border-bottom:none;}
+.finance-row-head{background:var(--bg3);}
+.filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.filter-row select,.filter-row input{width:auto;flex:1;min-width:120px;}
+.csv-drop{border:0.5px dashed var(--border2);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;transition:all 0.12s;margin-bottom:14px;}
+.csv-drop:hover{border-color:var(--text3);background:var(--bg3);}
+.csv-preview{background:var(--bg3);border-radius:var(--r-sm);overflow:auto;margin-bottom:12px;max-height:200px;}
+.csv-preview table{width:100%;border-collapse:collapse;font-size:11px;font-family:var(--mono);}
+.csv-preview th,.csv-preview td{padding:5px 8px;border-bottom:0.5px solid var(--border);text-align:left;}
+.csv-preview th{color:var(--text3);background:var(--bg4);}
+.ready-label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--text2);user-select:none;}
+.ready-label input[type=checkbox]{width:auto;flex-shrink:0;}
+.ready-label.checked{color:var(--green);}
+.add-form{border:0.5px dashed var(--border2);border-radius:var(--r-lg);padding:16px;margin-top:6px;}
+.hint{font-size:11px;color:var(--text3);margin-top:4px;}
+.sep{height:0.5px;background:var(--border);margin:20px 0;}
 </style>
 </head>
 <body>
 <div class="shell">
-  <aside class="sidebar" id="sidebar">
-    <div class="logo">
-      <span class="logo-word">Daphnie</span>
-      <span class="logo-sub">Release Hub</span>
-    </div>
+  <aside class="sidebar">
+    <div class="logo"><span class="logo-word">Daphnie</span><span class="logo-sub">Release Hub</span></div>
     <nav class="nav" id="nav"></nav>
     <div class="sidebar-bottom">
-      <button class="btn btn-ghost btn-sm" onclick="exportCSV()" style="width:100%;display:flex;align-items:center;gap:7px;justify-content:center;">
-        <i class="ti ti-download" style="font-size:14px;"></i> Export CSV
-      </button>
+      <button class="btn btn-ghost btn-sm" onclick="exportJSON()" style="display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-download"></i>Backup data</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('json-file').click()" style="display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-upload"></i>Restore backup</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()" style="display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-file-spreadsheet"></i>Export CSV</button>
     </div>
   </aside>
   <main class="main" id="main"></main>
 </div>
+<input type="file" id="json-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
+<input type="file" id="csv-file" accept=".csv,.txt" style="display:none" onchange="handleCSVFile(this)"/>
 
 <script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
 const BS=[
-  {id:'28',title:'28',collabs:[{n:'Alistair Hayes',m:100,p:75},{n:'Thomas Bleach',m:0,p:25}],dist:20,baseExp:1443.46,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'stay-long',title:'Stay Long',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jiwon Simpkins',m:50,p:50}],dist:20,baseExp:250,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'claps',title:'This Song Has Claps In It',collabs:[{n:'Alistair Hayes',m:95,p:50},{n:'Ben Siva',m:5,p:50}],dist:20,baseExp:1759.67,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'alive',title:'Alive (not dead)',collabs:[{n:'Alistair Hayes',m:90,p:50},{n:'Ross James',m:10,p:50}],dist:20,baseExp:873.69,baseEarn:2.30,paid:0,isrc:'',upc:''},
-  {id:'cupid-bp',title:'Cupid (Barley Passable Redesign)',collabs:[{n:'Alistair Hayes',m:70,p:100},{n:'Barley Passable',m:30,p:0}],dist:20,baseExp:300,baseEarn:0,paid:0.32,isrc:'',upc:''},
-  {id:'wanna-be',title:'Wanna Be (with) You',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Max Jacobs',m:0,p:50}],dist:20,baseExp:1878.99,baseEarn:0.74,paid:0,isrc:'',upc:''},
-  {id:'ppopimf',title:"Perfect Piece Of Person I'm Made For",collabs:[{n:'Alistair Hayes',m:100,p:50},{n:"Will O'Donohue",m:0,p:50}],dist:20,baseExp:760.09,baseEarn:3.20,paid:0,isrc:'',upc:''},
-  {id:'cupid',title:'Cupid',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:769.32,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'minimalism',title:'Minimalism',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Harry Patrick',m:0,p:50}],dist:20,baseExp:1435.17,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'chasing',title:'Chasing Shadows',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:"Will O'Donohue",m:50,p:50}],dist:20,baseExp:1602.87,baseEarn:823.99,paid:0.49,isrc:'',upc:''},
-  {id:'easy',title:'Easy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Ben Siva',m:50,p:50}],dist:20,baseExp:1584.99,baseEarn:150,paid:0.49,isrc:'',upc:''},
-  {id:'red',title:'Red to be Blue',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Holly Hebe',m:50,p:50}],dist:20,baseExp:255.73,baseEarn:0.74,paid:0.85,isrc:'',upc:''},
-  {id:'mixtape',title:'the start of a mixtape',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'sugarcoat',title:'Sugarcoat',collabs:[{n:'Alistair Hayes',m:55.5,p:55},{n:'Jack Howe',m:37,p:37},{n:'Joel Quartermain',m:5,p:5}],dist:20,baseExp:4491.06,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'scooters',title:'Scooters + Shins',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:494.59,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'dizzy',title:'Dizzy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jerome Blaze',m:50,p:50}],dist:20,baseExp:5115.51,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'late',title:'Late',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Jack Howe',m:0,p:50}],dist:20,baseExp:4934.61,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'yprgt',title:"You're Pretty Great And I Normally Hate Things",collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Budo Miller',m:50,p:50}],dist:20,baseExp:2009.57,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'digbs',title:'Digital Bullshit',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:1901.28,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'trailers',title:"i don't watch trailers cos they oversell and give away the whole story",collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'confessions',title:'Confessions To An Ex',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:4264.10,baseEarn:93.88,paid:0,isrc:'',upc:''},
-  {id:'lastsong',title:"the last song i'll ever write for you (i promise)",collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:2633.35,baseEarn:93.14,paid:0,isrc:'',upc:''},
-  {id:'lights',title:'Lights Out Baby',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:0,baseEarn:0,paid:0,isrc:'',upc:''},
-  {id:'serotonin',title:'Serotonin',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Sabrina Toon',m:50,p:50}],dist:20,baseExp:535.25,baseEarn:0,paid:0.48,isrc:'',upc:''},
-  {id:'ctae-vinyl',title:'Confessions To An Ex Vinyl',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:3199.58,baseEarn:931.41,paid:0,isrc:'',upc:''},
+  {id:'28',title:'28',collabs:[{n:'Alistair Hayes',m:100,p:75},{n:'Thomas Bleach',m:0,p:25}],baseExp:1443.46,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'stay-long',title:'Stay Long',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jiwon Simpkins',m:50,p:50}],baseExp:250,baseEarn:0,paid:0,isrc:'',upc:'',distroType:'third-party',distroNote:"Through Jiwon's team — you receive your cut once they've recouped. No splits to pay from your end."},
+  {id:'claps',title:'This Song Has Claps In It',collabs:[{n:'Alistair Hayes',m:95,p:50},{n:'Ben Siva',m:5,p:50}],baseExp:1759.67,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'alive',title:'Alive (not dead)',collabs:[{n:'Alistair Hayes',m:90,p:50},{n:'Ross James',m:10,p:50}],baseExp:873.69,baseEarn:2.30,paid:0,isrc:'',upc:''},
+  {id:'cupid-bp',title:'Cupid (Barley Passable Redesign)',collabs:[{n:'Alistair Hayes',m:70,p:100},{n:'Barley Passable',m:30,p:0}],baseExp:300,baseEarn:0,paid:0.32,isrc:'',upc:''},
+  {id:'wanna-be',title:'Wanna Be (with) You',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Max Jacobs',m:0,p:50}],baseExp:1878.99,baseEarn:0.74,paid:0,isrc:'',upc:''},
+  {id:'ppopimf',title:"Perfect Piece Of Person I'm Made For",collabs:[{n:'Alistair Hayes',m:100,p:50},{n:"Will O'Donohue",m:0,p:50}],baseExp:760.09,baseEarn:3.20,paid:0,isrc:'',upc:''},
+  {id:'cupid',title:'Cupid',collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:769.32,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'minimalism',title:'Minimalism',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Harry Patrick',m:0,p:50}],baseExp:1435.17,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'chasing',title:'Chasing Shadows',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:"Will O'Donohue",m:50,p:50}],baseExp:1602.87,baseEarn:823.99,paid:0.49,isrc:'',upc:''},
+  {id:'easy',title:'Easy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Ben Siva',m:50,p:50}],baseExp:1584.99,baseEarn:150,paid:0.49,isrc:'',upc:''},
+  {id:'red',title:'Red to be Blue',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Holly Hebe',m:50,p:50}],baseExp:255.73,baseEarn:0.74,paid:0.85,isrc:'',upc:'',distroType:'shared',distroCompany:'Gyrostream',distroNote:'Holly handles this through Gyrostream — splits paid automatically to both of you. Only Bandcamp income needs manual splitting.'},
+  {id:'mixtape',title:'the start of a mixtape',collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'sugarcoat',title:'Sugarcoat',collabs:[{n:'Alistair Hayes',m:55.5,p:55},{n:'Jack Howe',m:37,p:37},{n:'Joel Quartermain',m:5,p:5}],baseExp:4491.06,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'scooters',title:'Scooters + Shins',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],baseExp:494.59,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'dizzy',title:'Dizzy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jerome Blaze',m:50,p:50}],baseExp:5115.51,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'late',title:'Late',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Jack Howe',m:0,p:50}],baseExp:4934.61,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'yprgt',title:"You're Pretty Great And I Normally Hate Things",collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Budo Miller',m:50,p:50}],baseExp:2009.57,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'digbs',title:'Digital Bullshit',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],baseExp:1901.28,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'trailers',title:"i don't watch trailers cos they oversell and give away the whole story",collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'confessions',title:'Confessions To An Ex',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],baseExp:4264.10,baseEarn:93.88,paid:0,isrc:'',upc:''},
+  {id:'lastsong',title:"the last song i'll ever write for you (i promise)",collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:2633.35,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'lights',title:'Lights Out Baby',collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:0,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'serotonin',title:'Serotonin',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Sabrina Toon',m:50,p:50}],baseExp:535.25,baseEarn:0,paid:0.48,isrc:'',upc:'',distroType:'shared',distroCompany:'Gyrostream',distroNote:"Distributed through Gyrostream — Sabrina's splits paid automatically. Only Bandcamp income needs manual splitting."},
+  {id:'ctae-vinyl',title:'Confessions To An Ex Vinyl',collabs:[{n:'Alistair Hayes',m:100,p:100}],baseExp:3199.58,baseEarn:931.41,paid:0,isrc:'',upc:''},
 ];
 
 const ML=[
@@ -233,335 +198,356 @@ const ML=[
   {l:'Weekend 4',d:30},{l:'Week 5',d:35},{l:'Week 6',d:42},{l:'Final day',d:49},
 ];
 
-const EMAILS=[
-  {k:'distro-confirm',lbl:'Distro: confirm release date',when:'7 weeks before',sub:s=>`Release date confirmation — "${s}"`,body:(s,rd)=>`Hi team,\n\nHope you're well! Just confirming that "${s}" is targeting ${rd} for release.\n\nCan you confirm this is locked in on your end?\n\nThanks!\nAlistair`},
-  {k:'isrc-upc',lbl:'Distro: request ISRC + UPC',when:'After upload to distro',sub:s=>`ISRC and UPC request — "${s}"`,body:(s,rd)=>`Hi team,\n\n"${s}" has now been distributed — could you please send through the ISRC and UPC codes?\n\nI need them for APRA registration, Genius, and pitching.\n\nCheers,\nAlistair`},
-  {k:'mailing-list',lbl:'Distro: mailing list request',when:'Day before @ 3:30pm',sub:s=>`Updated mailing list — "${s}" out tomorrow`,body:(s,rd)=>`Hi team,\n\n"${s}" is out tomorrow! Could you please send through the updated mailing list so I can reach out to new sign-ups?\n\nAppreciate it!\nAlistair\n\n[Scheduled send: 3:30pm the day before release]`},
-  {k:'jjj-first',lbl:'Triple j: first play pitch',when:'4 weeks before',sub:s=>`First play consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nI'd love to submit "${s}" for triple j first play — releasing ${rd}.\n\n[2–3 sentences: what the song is about, how it came to be, what makes it stand out]\n\nStreaming: [LINK]\nPresave: [PRESAVE LINK]\n\nThanks!\nAlistair`},
-  {k:'spotify-ed',lbl:'Spotify: editorial pitch',when:'4 weeks before',sub:s=>`Editorial consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\n"${s}" releases ${rd} — submitting for editorial playlist consideration.\n\n[Genre, mood, theme, who it's for]\n\nPrevious placements: [LIST]\nSpotify for Artists: [LINK]\n\nThanks!\nAlistair`},
-  {k:'radio',lbl:'Radio pitch',when:'1 week before',sub:s=>`Music submission — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nSubmitting "${s}" for airplay consideration — out ${rd}.\n\n[Why it fits your station — 2 sentences]\n\nMP3: [LINK] | Streaming: [LINK] | Press kit: [LINK]\n\nThanks for listening!\nAlistair`},
-  {k:'blog',lbl:'Blog / press pitch',when:'1 week before',sub:s=>`Press feature — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nReaching out about "${s}", releasing ${rd}, to explore a feature or premiere.\n\n[What it's about, story behind it, what makes it stand out]\n\nHappy to provide an exclusive stream, interview, or extra content.\n\nStreaming: [LINK] | Press kit: [LINK]\n\nThanks!\nAlistair`},
-  {k:'playlist',lbl:'Playlist pitch',when:'1 week before',sub:s=>`Playlist submission — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nLong-time fan of your curation — putting "${s}" forward. Out ${rd}.\n\n[Why it fits your playlist — 1–2 sentences]\n\nSpotify: [LINK]\n\nThanks!\nAlistair`},
-  {k:'industry',lbl:'Industry email',when:'1 week before',sub:s=>`New release — "${s}" — Alistair`,body:(s,rd)=>`Hi [Name],\n\nHope you're well! "${s}" is out ${rd} and I wanted you to hear it.\n\n[Personal note — how you know them, why you're sharing]\n[2 sentences about the song]\n\nWould love your thoughts: [LINK]\n\nCheers,\nAlistair`},
-  {k:'jjj-review',lbl:'Triple j: review pitch',when:'Release day',sub:s=>`Review consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\n"${s}" came out ${rd} and I'd love to put it forward for a triple j review.\n\n[What the song is about, emotional core, what makes it stand out]\n\nStreaming: [LINK] | Unearthed: [LINK]\n\nThank you!\nAlistair`},
-  {k:'fans',lbl:'Mailing list to fans',when:'Release day',sub:s=>`New single out now — "${s}"`,body:(s,rd)=>`Hi [Name],\n\n"${s}" is out now!\n\n[What it's about — personal note to connect with the reader]\n\nListen here: [LINK]\n\n[CTA — follow on Spotify, presave next song, etc.]\n\nThank you!\nAlistair`},
+const EMAIL_DEFAULTS=[
+  {k:'distro-confirm',lbl:'Distro: confirm release date',when:'7 weeks before',
+   sub:s=>`Release date confirmation — "${s}"`,
+   body:(s,rd)=>`Hi team,\n\nHope you're well! Just confirming that "${s}" is targeting ${rd} for release.\n\nCan you confirm this is locked in on your end?\n\nThanks!\nAlistair`},
+  {k:'isrc-upc',lbl:'Distro: request ISRC + UPC',when:'After upload to distro',
+   sub:s=>`ISRC and UPC request — "${s}"`,
+   body:(s,rd)=>`Hi team,\n\n"${s}" has now been distributed — could you please send through the ISRC and UPC codes?\n\nI need them for APRA registration, Genius, and pitching.\n\nCheers,\nAlistair`},
+  {k:'mailing-list',lbl:'Distro: mailing list request',when:'Day before @ 3:30pm',
+   sub:s=>`Updated mailing list — "${s}" out tomorrow`,
+   body:(s,rd)=>`Hi team,\n\n"${s}" is out tomorrow! Could you please send through the updated mailing list so I can reach out to new sign-ups?\n\nAppreciate it!\nAlistair\n\n[Scheduled send: 3:30pm]`},
+  {k:'jjj-first',lbl:'Triple j: first play pitch',when:'4 weeks before',
+   sub:s=>`First play consideration — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\nI'd love to submit "${s}" for triple j first play — releasing ${rd}.\n\n[2–3 sentences: what the song is about, how it came to be, what makes it stand out]\n\nStreaming: [LINK]\nPresave: [PRESAVE LINK]\n\nThanks!\nAlistair`},
+  {k:'spotify-ed',lbl:'Spotify: editorial pitch',when:'4 weeks before',
+   sub:s=>`Editorial consideration — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\n"${s}" releases ${rd} — submitting for editorial playlist consideration.\n\n[Genre, mood, theme, who it's for]\n\nPrevious placements: [LIST]\nSpotify for Artists: [LINK]\n\nThanks!\nAlistair`},
+  {k:'radio',lbl:'Radio pitch',when:'1 week before',
+   sub:s=>`Music submission — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\nSubmitting "${s}" for airplay consideration — out ${rd}.\n\n[Why it fits your station — 2 sentences]\n\nMP3: [LINK] | Streaming: [LINK] | Press kit: [LINK]\n\nThanks!\nAlistair`},
+  {k:'blog',lbl:'Blog / press pitch',when:'1 week before',
+   sub:s=>`Press feature — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\nReaching out about "${s}", releasing ${rd}, to explore a feature or premiere.\n\n[What it's about, story behind it, what makes it stand out]\n\nHappy to provide an exclusive stream, interview, or extra content.\n\nStreaming: [LINK] | Press kit: [LINK]\n\nThanks!\nAlistair`},
+  {k:'playlist',lbl:'Playlist pitch',when:'1 week before',
+   sub:s=>`Playlist submission — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\nLong-time fan of your curation — putting "${s}" forward. Out ${rd}.\n\n[Why it fits your playlist — 1–2 sentences]\n\nSpotify: [LINK]\n\nThanks!\nAlistair`},
+  {k:'industry',lbl:'Industry email',when:'1 week before',
+   sub:s=>`New release — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi [Name],\n\nHope you're well! "${s}" is out ${rd} and I wanted you to hear it.\n\n[Personal note]\n[2 sentences about the song]\n\nWould love your thoughts: [LINK]\n\nCheers,\nAlistair`},
+  {k:'jjj-review',lbl:'Triple j: review pitch',when:'Release day',
+   sub:s=>`Review consideration — "${s}" — Alistair`,
+   body:(s,rd)=>`Hi,\n\n"${s}" came out ${rd} — I'd love to put it forward for a review.\n\n[What the song is about, emotional core, what makes it stand out]\n\nStreaming: [LINK] | Unearthed: [LINK]\n\nThank you!\nAlistair`},
+  {k:'fans',lbl:'Mailing list to fans',when:'Release day',
+   sub:s=>`New single out now — "${s}"`,
+   body:(s,rd)=>`Hi [Name],\n\n"${s}" is out now!\n\n[What it's about — personal note]\n\nListen here: [LINK]\n\n[CTA — follow on Spotify, presave next song, etc.]\n\nThank you!\nAlistair`},
 ];
 
-// STATE
-let state={patches:{},extras:[],ts:'',td:'',view:'catalogue',selId:null,songTab:'overview',q:'',openEmails:{},openTx:{},addOpen:false};
+const STATUS_META={
+  idea:{label:'Idea',color:'var(--text3)',dot:'#5a6072'},
+  writing:{label:'Writing',color:'var(--blue)',dot:'#60a5fa'},
+  demoing:{label:'Demoing',color:'var(--amber)',dot:'#fbbf24'},
+  recording:{label:'Recording',color:'var(--green)',dot:'#34d399'},
+};
 
-function load(){try{const d=localStorage.getItem('daphnie-hub-v1');if(d){const p=JSON.parse(d);Object.assign(state,p);}}catch(e){}}
-function save(){try{localStorage.setItem('daphnie-hub-v1',JSON.stringify({patches:state.patches,extras:state.extras,ts:state.ts,td:state.td}));}catch(e){}}
+const DISTRO_TYPES={
+  self:{label:'Through me',desc:'You distribute and handle all splits manually.'},
+  shared:{label:'Shared platform (e.g. Gyrostream)',desc:"Both parties on the same platform — splits paid automatically. Only Bandcamp purchases need manual splitting."},
+  'third-party':{label:"Through their team / label",desc:"Their label or management distributes. You receive your cut directly — no splits to pay from your end."},
+};
 
-function getSongs(){return[...BS,...state.extras].map(s=>({...s,...(state.patches[s.id]||{}),baseExp:s.baseExp,baseEarn:s.baseEarn,collabs:s.collabs}));}
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let S={
+  patches:{},extras:[],writingSongs:[],financeEntries:[],emailEdits:{},ts:'',td:'',
+  view:'catalogue',selId:null,songTab:'overview',q:'',
+  openEmails:{},editingEmails:{},openTx:{},
+  addOpen:false,wAddOpen:false,wEditId:null,
+  fSong:'',fType:'',finAddOpen:false,
+  csvData:null,csvOpen:false,
+};
 
+const STORE='daphnie-v3';
+function load(){
+  try{
+    const d=localStorage.getItem(STORE);
+    if(d){const p=JSON.parse(d);['patches','extras','writingSongs','financeEntries','emailEdits','ts','td'].forEach(k=>{if(p[k]!==undefined)S[k]=p[k];});}
+    else{
+      const v1=localStorage.getItem('daphnie-hub-v1');
+      if(v1){const p=JSON.parse(v1);if(p.p)S.patches=p.p;if(p.e)S.extras=p.e;if(p.ts)S.ts=p.ts;if(p.td)S.td=p.td;}
+    }
+  }catch(e){}
+}
+function save(){try{localStorage.setItem(STORE,JSON.stringify({patches:S.patches,extras:S.extras,writingSongs:S.writingSongs,financeEntries:S.financeEntries,emailEdits:S.emailEdits,ts:S.ts,td:S.td}));}catch(e){}}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function getSongs(){return[...BS,...S.extras].map(s=>{const p=S.patches[s.id]||{};return{...s,...p,baseExp:s.baseExp,baseEarn:s.baseEarn,collabs:s.collabs};});}
 function calcTotals(s){
   const expTx=(s.expTx||[]).reduce((a,t)=>a+parseFloat(t.amount||0),0);
   const earnTx=(s.earnTx||[]).reduce((a,t)=>a+parseFloat(t.amount||0),0);
-  const totalExp=(s.baseExp||0)+expTx;
-  const totalEarn=(s.baseEarn||0)+earnTx;
-  const dist=s.dist||20;
-  const net=totalEarn*(1-dist/100);
-  const pool=net-totalExp;
-  const pct=totalExp>0?Math.min(100,Math.round(net/totalExp*100)):100;
-  return{totalExp,totalEarn,net,pool,recouped:pool>=0,pct,expTx,earnTx};
+  const totalExp=(s.baseExp||0)+expTx,totalEarn=(s.baseEarn||0)+earnTx;
+  const pool=totalEarn-totalExp;
+  const pct=totalExp>0?Math.min(100,Math.round(totalEarn/totalExp*100)):100;
+  return{totalExp,totalEarn,pool,recouped:pool>=0,pct,expTx,earnTx};
 }
-
-function patch(id,field,val){
-  if(!state.patches[id])state.patches[id]={};
-  state.patches[id][field]=val;
-  save();render();
-}
-
-function addTx(id,txKey,tx){
-  if(!state.patches[id])state.patches[id]={};
-  if(!state.patches[id][txKey])state.patches[id][txKey]=[];
-  state.patches[id][txKey].push(tx);
-  save();render();
-}
-
-function delTx(id,txKey,txId){
-  state.patches[id][txKey]=state.patches[id][txKey].filter(t=>t.id!==txId);
-  save();render();
-}
-
+function patch(id,f,v){if(!S.patches[id])S.patches[id]={};S.patches[id][f]=v;save();render();}
+function patchNoRender(id,f,v){if(!S.patches[id])S.patches[id]={};S.patches[id][f]=v;save();}
+function addTx(id,tk,tx){patchNoRender(id,tk,[...(getSongs().find(s=>s.id===id)[tk]||[]),tx]);render();}
+function delTx(id,tk,txId){patchNoRender(id,tk,(getSongs().find(s=>s.id===id)[tk]||[]).filter(t=>t.id!==txId));render();}
 function uid(){return Math.random().toString(36).slice(2,9);}
-
 function fmtRD(str){if(!str)return'[release date]';return new Date(str+'T00:00:00').toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
-function fmtD(str,days){if(!str)return'—';const d=new Date(str+'T00:00:00');d.setDate(d.getDate()+days);return d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});}
 function today0(){const d=new Date();d.setHours(0,0,0,0);return d;}
-
-function copyText(txt,btnId){
-  navigator.clipboard.writeText(txt).then(()=>{
-    const b=document.getElementById(btnId);if(!b)return;
-    const orig=b.textContent;b.textContent='✓ Copied';b.style.color='var(--green)';
-    setTimeout(()=>{b.textContent=orig;b.style.color='';},2000);
-  }).catch(()=>{});
+function e(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function getEmailContent(em,song,date){
+  const ed=S.emailEdits[em.k];
+  if(ed&&(ed.subject||ed.body)){
+    return{subject:ed.subject||em.sub(song),body:ed.body||em.body(song,fmtRD(date))};
+  }
+  return{subject:em.sub(song),body:em.body(song,fmtRD(date))};
 }
+function isReady(k){return S.emailEdits[k]&&S.emailEdits[k].readyToSend;}
+function copyBtn(txt,id){navigator.clipboard.writeText(txt).then(()=>{const b=document.getElementById(id);if(b){const o=b.textContent;b.textContent='✓ Copied';b.style.color='var(--green)';setTimeout(()=>{b.textContent=o;b.style.color='';},2000);}}).catch(()=>{});}
 
-function exportCSV(){
-  const songs=getSongs();
-  const rows=[['Title','ISRC','UPC','Distro%','Hist. Expenses','New Expenses','Hist. Income','New Income','Total Expenses','Total Earnings','Net After Distro','Recouped','Collaborators']];
-  songs.forEach(s=>{
-    const{totalExp,totalEarn,net,recouped,expTx,earnTx}=calcTotals(s);
-    rows.push([s.title,s.isrc||'',s.upc||'',s.dist||20,(s.baseExp||0).toFixed(2),expTx.toFixed(2),(s.baseEarn||0).toFixed(2),earnTx.toFixed(2),totalExp.toFixed(2),totalEarn.toFixed(2),net.toFixed(2),recouped?'Yes':'No',s.collabs.filter(c=>c.n!=='Alistair Hayes').map(c=>`${c.n} M:${c.m}% P:${c.p}%`).join('; ')]);
-  });
-  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='daphnie-splits.csv';a.click();
-}
-
-// ---- RENDER FUNCTIONS ----
-
+// ─── NAV ─────────────────────────────────────────────────────────────────────
 function renderNav(){
-  const nav=document.getElementById('nav');
   const songs=getSongs();
-  const sections=[
-    {icon:'ti-layout-grid',label:'Catalogue',view:'catalogue'},
-    {icon:'ti-tools',label:'Release Tools',view:'tools'},
+  const navItems=[
+    {icon:'ti-layout-grid',lbl:'Catalogue',v:'catalogue'},
+    {icon:'ti-pencil',lbl:'In Progress',v:'writing'},
+    {icon:'ti-report-money',lbl:'Finance',v:'finance'},
+    {icon:'ti-tools',lbl:'Release Tools',v:'tools'},
   ];
   let html=`<div class="nav-section">Navigation</div>`;
-  sections.forEach(s=>{
-    html+=`<button class="nav-btn${state.view===s.view?' active':''}" onclick="go('${s.view}')"><i class="ti ${s.icon}"></i>${s.label}</button>`;
-  });
-  html+=`<div class="nav-section" style="margin-top:8px;">Songs</div>`;
+  navItems.forEach(n=>{html+=`<button class="nav-btn${S.view===n.v?' active':''}" onclick="go('${n.v}')"><i class="ti ${n.icon}"></i>${n.lbl}</button>`;});
+  html+=`<div class="nav-section" style="margin-top:6px;">Songs</div>`;
   songs.forEach(s=>{
-    const active=state.view==='song'&&state.selId===s.id;
-    const short=s.title.length>22?s.title.slice(0,21)+'…':s.title;
-    html+=`<div class="nav-song${active?' active':''}" onclick="openSong('${s.id}')" title="${s.title}">${short}</div>`;
+    const active=S.view==='song'&&S.selId===s.id;
+    html+=`<div class="nav-song${active?' active':''}" onclick="openSong('${s.id}')" title="${e(s.title)}">${e(s.title.length>23?s.title.slice(0,22)+'…':s.title)}</div>`;
   });
-  nav.innerHTML=html;
+  document.getElementById('nav').innerHTML=html;
 }
+function go(v){S.view=v;render();}
+function openSong(id){S.selId=id;S.view='song';S.songTab='overview';render();}
 
-function go(view){state.view=view;render();}
-function openSong(id){state.selId=id;state.view='song';state.songTab='overview';render();}
-
+// ─── CATALOGUE ───────────────────────────────────────────────────────────────
 function renderCatalogue(){
   const songs=getSongs();
-  const filtered=songs.filter(s=>!state.q||s.title.toLowerCase().includes(state.q.toLowerCase())||s.collabs.some(c=>c.n.toLowerCase().includes(state.q.toLowerCase())));
-  const totalInvested=songs.reduce((a,s)=>a+calcTotals(s).totalExp,0);
-  const splitsActive=songs.filter(s=>calcTotals(s).recouped).length;
-
-  let html=`
-    <div class="page-title">Catalogue</div>
-    <div class="page-sub">${songs.length} songs · All recoupment data</div>
-    <div class="stat-grid">
-      <div class="stat"><div class="stat-label">Songs</div><div class="stat-value">${songs.length}</div></div>
-      <div class="stat"><div class="stat-label">Total Invested</div><div class="stat-value amber">$${totalInvested.toLocaleString('en-AU',{maximumFractionDigits:0})}</div></div>
-      <div class="stat"><div class="stat-label">Splits Active</div><div class="stat-value green">${splitsActive}</div></div>
-    </div>
-    <div class="search-row">
-      <input placeholder="Search songs or collaborators…" value="${state.q}" oninput="state.q=this.value;render();" />
-    </div>`;
-
+  const filtered=songs.filter(s=>!S.q||s.title.toLowerCase().includes(S.q.toLowerCase())||s.collabs.some(c=>c.n.toLowerCase().includes(S.q.toLowerCase())));
+  const totalInv=songs.reduce((a,s)=>a+calcTotals(s).totalExp,0);
+  const active=songs.filter(s=>calcTotals(s).recouped).length;
+  let h=`<div class="page-title">Catalogue</div><div class="page-sub">${songs.length} songs · All recoupment tracked</div>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-label">Songs</div><div class="stat-value">${songs.length}</div></div>
+    <div class="stat"><div class="stat-label">Total invested</div><div class="stat-value amber">$${totalInv.toLocaleString('en-AU',{maximumFractionDigits:0})}</div></div>
+    <div class="stat"><div class="stat-label">Splits active</div><div class="stat-value green">${active}</div></div>
+  </div>
+  <div class="search-row"><input placeholder="Search songs or collaborators…" value="${e(S.q)}" oninput="S.q=this.value;render();"/></div>`;
   filtered.forEach(s=>{
     const{recouped,pct}=calcTotals(s);
     const others=s.collabs.filter(c=>c.n!=='Alistair Hayes');
-    const fillColor=recouped?'var(--green)':'var(--text3)';
-    html+=`
-      <div class="song-row" onclick="openSong('${s.id}')">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-          <div style="flex:1;min-width:0;margin-right:10px;">
-            <div class="song-row-title">${s.title}</div>
-            <div class="song-row-sub">${others.length?others.map(c=>c.n).join(', '):'Solo'}</div>
-          </div>
-          <span class="badge ${recouped?'green':'gray'}">${recouped?'Splits active':`${pct}%`}</span>
+    const dt=s.distroType||'self';
+    const dtBadge=dt==='shared'?`<span class="badge amber" style="margin-left:6px;">Shared distro</span>`:dt==='third-party'?`<span class="badge blue" style="margin-left:6px;">3rd party</span>`:'';
+    h+=`<div class="song-row" onclick="openSong('${s.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="flex:1;min-width:0;margin-right:10px;">
+          <div class="song-row-title">${e(s.title)}${dtBadge}</div>
+          <div class="song-row-sub">${others.length?e(others.map(c=>c.n).join(', ')):'Solo'}</div>
         </div>
-        <div class="bar"><div class="bar-fill" style="width:${pct}%;background:${fillColor};"></div></div>
-      </div>`;
+        <span class="badge ${recouped?'green':'gray'}">${recouped?'Splits active':`${pct}%`}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${pct}%;background:${recouped?'var(--green)':'var(--text3)'};"></div></div>
+    </div>`;
   });
-
-  // Add song button / form
-  if(!state.addOpen){
-    html+=`<button class="btn btn-ghost" onclick="state.addOpen=true;render();" style="width:100%;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;border-style:dashed;padding:10px;">
-      <i class="ti ti-plus" style="font-size:14px;"></i> Add new song
-    </button>`;
+  if(!S.addOpen){
+    h+=`<button class="btn btn-ghost" onclick="S.addOpen=true;render();" style="width:100%;margin-top:6px;border-style:dashed;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-plus"></i>Add released song</button>`;
   } else {
-    html+=`<div class="add-form">
-      <div class="add-form-title">Add new song</div>
-      <div class="field"><label>Song title</label><input id="af-title" placeholder="Song title" /></div>
-      <div class="field"><label>Collaborator name (optional)</label><input id="af-cn" placeholder="e.g. Harry Patrick" oninput="render2('af-collab-fields',renderAddCollabFields)" /></div>
+    h+=`<div class="add-form">
+      <div style="font-size:13px;font-weight:500;margin-bottom:14px;">Add released song</div>
+      <div class="field"><label>Song title</label><input id="af-t" placeholder="Title"/></div>
+      <div class="field"><label>Collaborator name (optional — add more after)</label><input id="af-cn" placeholder="e.g. Harry Patrick" oninput="updateAddCollabs()"/></div>
       <div id="af-collab-fields"></div>
-      <div class="field-row col2 field">
-        <div><label>Distro %</label><input id="af-dist" type="number" min="10" max="50" value="20" /></div>
-        <div><label>Opening expenses ($)</label><input id="af-exp" type="number" min="0" value="0" /></div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-primary" style="flex:1;" onclick="submitAddSong()">Add song</button>
-        <button class="btn btn-ghost" onclick="state.addOpen=false;render();">Cancel</button>
-      </div>
+      <div class="field-row col2 field"><div><label>Opening expenses ($)</label><input id="af-exp" type="number" min="0" value="0"/></div><div><label>Opening earnings ($)</label><input id="af-earn" type="number" min="0" value="0"/></div></div>
+      <div style="display:flex;gap:8px;"><button class="btn btn-primary" style="flex:1;" onclick="submitAddSong()">Add song</button><button class="btn btn-ghost" onclick="S.addOpen=false;render();">Cancel</button></div>
     </div>`;
   }
-
-  document.getElementById('main').innerHTML=html;
+  document.getElementById('main').innerHTML=h;
 }
-
-function renderAddCollabFields(){
-  const cn=document.getElementById('af-cn');
-  if(!cn||!cn.value.trim())return'';
-  return`<div class="field-row col2 field">
-    <div><label>Master split % (${cn.value})</label><input id="af-cm" type="number" min="0" max="100" value="50" /></div>
-    <div><label>Publishing split % (${cn.value})</label><input id="af-cp" type="number" min="0" max="100" value="50" /></div>
-  </div>`;
+function updateAddCollabs(){
+  const cn=(document.getElementById('af-cn')||{}).value||'';
+  const el=document.getElementById('af-collab-fields');
+  if(!el)return;
+  el.innerHTML=cn.trim()?`<div class="field-row col2 field"><div><label>Master % (${e(cn)})</label><input id="af-cm" type="number" min="0" max="100" value="50"/></div><div><label>Publishing % (${e(cn)})</label><input id="af-cp" type="number" min="0" max="100" value="50"/></div></div>`:'';
 }
-
-function render2(id,fn){const el=document.getElementById(id);if(el)el.innerHTML=fn();}
-
 function submitAddSong(){
-  const title=(document.getElementById('af-title')||{}).value||'';
+  const title=(document.getElementById('af-t')||{}).value||'';
   if(!title.trim())return;
   const cn=((document.getElementById('af-cn')||{}).value||'').trim();
   const cm=parseFloat((document.getElementById('af-cm')||{}).value||0);
   const cp=parseFloat((document.getElementById('af-cp')||{}).value||0);
-  const dist=parseFloat((document.getElementById('af-dist')||{}).value||20);
   const exp=parseFloat((document.getElementById('af-exp')||{}).value||0);
+  const earn=parseFloat((document.getElementById('af-earn')||{}).value||0);
   const id='ns-'+Date.now();
   const collabs=[{n:'Alistair Hayes',m:cn?100-cm:100,p:cn?100-cp:100}];
   if(cn)collabs.push({n:cn,m:cm,p:cp});
-  state.extras.push({id,title:title.trim(),collabs,dist,baseExp:exp,baseEarn:0,paid:0,isrc:'',upc:''});
-  state.addOpen=false;save();
-  openSong(id);
+  S.extras.push({id,title:title.trim(),collabs,baseExp:exp,baseEarn:earn,paid:0,isrc:'',upc:''});
+  S.addOpen=false;save();openSong(id);
 }
 
+// ─── SONG DETAIL ─────────────────────────────────────────────────────────────
 function renderSong(){
-  const songs=getSongs();
-  const s=songs.find(x=>x.id===state.selId);
+  const songs=getSongs();const s=songs.find(x=>x.id===S.selId);
   if(!s){go('catalogue');return;}
-  const{totalExp,totalEarn,net,pool,recouped,pct,expTx,earnTx}=calcTotals(s);
+  const{totalExp,totalEarn,pool,recouped,pct,expTx,earnTx}=calcTotals(s);
   const others=s.collabs.filter(c=>c.n!=='Alistair Hayes');
+  const dt=s.distroType||'self';
+  const tabs=[['overview','Overview'],['expenses','Expenses'],['income','Income'],['splits','Splits']];
+  let h=`<button class="back-btn" onclick="go('catalogue')"><i class="ti ti-arrow-left" style="font-size:13px;"></i>Catalogue</button>
+  <div class="page-title">${e(s.title)}</div>
+  <div class="page-sub">${others.length?'with '+e(others.map(c=>c.n).join(', ')):'Solo'}</div>
+  <div class="tabs">${tabs.map(([t,l])=>`<button class="tab-btn${S.songTab===t?' active':''}" onclick="S.songTab='${t}';render();">${l}</button>`).join('')}</div>`;
 
-  const tabs=['overview','expenses','income','splits'];
-  const tabLabels={overview:'Overview',expenses:'Expenses',income:'Income',splits:'Splits'};
-
-  let html=`
-    <button class="back-btn" onclick="go('catalogue')"><i class="ti ti-arrow-left" style="font-size:13px;"></i> Catalogue</button>
-    <div class="page-title">${s.title}</div>
-    <div class="page-sub">${others.length?'with '+others.map(c=>c.n).join(', '):'Solo'}</div>
-    <div class="tabs">
-      ${tabs.map(t=>`<button class="tab-btn${state.songTab===t?' active':''}" onclick="state.songTab='${t}';render();">${tabLabels[t]}</button>`).join('')}
-    </div>`;
-
-  if(state.songTab==='overview'){
-    html+=`
-      <div class="field-row col2 field">
-        <div><label>ISRC</label><input value="${s.isrc||''}" placeholder="AU-ABC-23-00001" oninput="patch('${s.id}','isrc',this.value)" /></div>
-        <div><label>UPC</label><input value="${s.upc||''}" placeholder="006024458349" oninput="patch('${s.id}','upc',this.value)" /></div>
-      </div>
-      <div class="dist-box">
-        <div class="dist-top">
-          <span style="font-size:12px;color:var(--text2);">Distro cut</span>
-          <span class="dist-pct">${s.dist||20}%</span>
-        </div>
-        <input type="range" min="10" max="50" step="5" value="${s.dist||20}" oninput="patch('${s.id}','dist',+this.value)" style="width:100%;" />
-        <div class="slider-labels"><span>10%</span><span>20% default</span><span>50% if invested</span></div>
-      </div>
-      <div class="grid2">
-        <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">After distro (${s.dist||20}%)</div><div class="mini-stat-value">$${net.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Net pool</div><div class="mini-stat-value" style="color:${pool>=0?'var(--green)':'var(--red)'};">${pool>=0?'+ ':'− '}$${Math.abs(pool).toFixed(2)}</div></div>
-      </div>
-      <div class="recoup-box ${recouped?'recouped':'pending'}">
-        <span style="font-size:13px;font-weight:500;color:${recouped?'var(--green)':'var(--text2)'};">
-          ${recouped?'✓ Splits active — payouts unlocked':`Recouping — ${pct}% there`}
-        </span>
-        ${!recouped?`<span style="font-size:12px;color:var(--text3);font-family:var(--mono);">$${Math.abs(pool).toFixed(2)} to go</span>`:''}
-      </div>
-      <div class="bar" style="height:5px;margin-bottom:20px;">
-        <div class="bar-fill" style="width:${pct}%;background:${recouped?'var(--green)':'var(--text3)'};" ></div>
-      </div>
-      <button class="btn btn-primary" style="width:100%;" onclick="state.ts='${s.title.replace(/'/g,"\\'")}';state.view='tools';render();">
-        Open in release tools ↗
-      </button>`;
+  if(S.songTab==='overview'){
+    // Distro info
+    const dtInfo=DISTRO_TYPES[dt]||DISTRO_TYPES.self;
+    const dtNoteClass=dt==='shared'?'shared':dt==='third-party'?'third':'self';
+    const note=s.distroNote||dtInfo.desc;
+    h+=`<div class="section-lbl">Distro Info</div>
+    <div class="field-row col3 field">
+      <div><label>Company</label><input value="${e(s.distroCompany||'')}" placeholder="e.g. Gyrostream" oninput="patchNoRender('${s.id}','distroCompany',this.value);save();"/></div>
+      <div><label>Their split %</label><input type="number" min="0" max="100" value="${e(s.distroSplit||'')}" placeholder="e.g. 15" oninput="patchNoRender('${s.id}','distroSplit',this.value);save();"/></div>
+      <div><label>Term (years)</label><input type="number" min="0" value="${e(s.distroYears||'')}" placeholder="e.g. 10" oninput="patchNoRender('${s.id}','distroYears',this.value);save();"/></div>
+    </div>
+    <div class="field"><label>Distro type</label>
+      <select onchange="patch('${s.id}','distroType',this.value)">
+        ${Object.entries(DISTRO_TYPES).map(([k,v])=>`<option value="${k}"${dt===k?' selected':''}>${e(v.label)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="distro-note ${dtNoteClass}"><i class="ti ti-info-circle" style="margin-right:6px;"></i>${e(note)}</div>
+    <div class="sep"></div>
+    <div class="section-lbl">Codes</div>
+    <div class="field-row col2 field">
+      <div><label>ISRC</label><input value="${e(s.isrc||'')}" placeholder="AU-ABC-23-00001" oninput="patchNoRender('${s.id}','isrc',this.value);save();"/></div>
+      <div><label>UPC</label><input value="${e(s.upc||'')}" placeholder="006024458349" oninput="patchNoRender('${s.id}','upc',this.value);save();"/></div>
+    </div>
+    <div class="sep"></div>
+    <div class="section-lbl">Recoupment</div>
+    <div class="grid2">
+      <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Net pool</div><div class="mini-stat-value" style="color:${pool>=0?'var(--green)':'var(--red)'};">${pool>=0?'+':'-'}$${Math.abs(pool).toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Progress</div><div class="mini-stat-value">${pct}%</div></div>
+    </div>
+    <div class="recoup-box ${recouped?'recouped':'pending'}">
+      <span style="font-size:13px;font-weight:500;color:${recouped?'var(--green)':'var(--text2)'};">${recouped?'✓ Splits active — payouts unlocked':`Recouping — ${pct}% there`}</span>
+      ${!recouped?`<span style="font-size:12px;color:var(--text3);font-family:var(--mono);">$${Math.abs(pool).toFixed(2)} to go</span>`:''}
+    </div>
+    <div class="bar" style="height:5px;margin-bottom:20px;"><div class="bar-fill" style="width:${pct}%;background:${recouped?'var(--green)':'var(--text3)'};" ></div></div>
+    <button class="btn btn-primary" style="width:100%;" onclick="S.ts='${e(s.title).replace(/'/g,"\\'")}';S.view='tools';render();">Open in release tools ↗</button>`;
   }
 
-  if(state.songTab==='expenses'){
-    html+=`
-      <div class="grid2">
-        <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value">$${(s.baseExp||0).toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--red);">$${expTx.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Total paid to collabs</div><div class="mini-stat-value">$${(s.paid||0).toFixed(2)}</div></div>
-      </div>
-      ${renderTxSection(s,'expTx','New expense transactions')}`;
+  if(S.songTab==='expenses'){
+    h+=`<div class="grid2">
+      <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value">$${(s.baseExp||0).toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--red);">+$${expTx.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Paid to collabs</div><div class="mini-stat-value">$${(s.paid||0).toFixed(2)}</div></div>
+    </div>${renderTxSection(s,'expTx','New expense transactions')}`;
   }
 
-  if(state.songTab==='income'){
-    html+=`
-      <div class="grid2">
-        <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value" style="color:var(--green);">$${(s.baseEarn||0).toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--green);">+$${earnTx.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Net after distro</div><div class="mini-stat-value">$${net.toFixed(2)}</div></div>
-      </div>
-      ${renderTxSection(s,'earnTx','New income transactions')}`;
+  if(S.songTab==='income'){
+    const isShared=dt==='shared';
+    if(isShared){
+      h+=`<div class="distro-note shared"><i class="ti ti-alert-triangle" style="margin-right:6px;"></i>Splits handled by ${e(s.distroCompany||'your shared platform')} automatically. Only flag Bandcamp income below for manual splitting.</div>`;
+    } else if(dt==='third-party'){
+      h+=`<div class="distro-note third"><i class="ti ti-info-circle" style="margin-right:6px;"></i>You receive your cut directly from their distro. No outgoing splits needed.</div>`;
+    }
+    h+=`<div class="grid2">
+      <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value" style="color:var(--green);">$${(s.baseEarn||0).toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--green);">+$${earnTx.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Net pool</div><div class="mini-stat-value" style="color:${pool>=0?'var(--green)':'var(--red)'};">${pool>=0?'+':'-'}$${Math.abs(pool).toFixed(2)}</div></div>
+    </div>${renderTxSection(s,'earnTx','New income transactions',isShared)}`;
   }
 
-  if(state.songTab==='splits'){
-    html+=`<div class="tbl-wrap"><table class="tbl"><thead><tr>
-      <th>Collaborator</th><th>Master</th><th>Publishing</th><th>${recouped&&others.length?'Owed from pool':'When recouped'}</th>
+  if(S.songTab==='splits'){
+    if(dt==='third-party'){
+      h+=`<div class="distro-note third" style="margin-bottom:16px;"><i class="ti ti-info-circle" style="margin-right:6px;"></i>Distributed through their team — you receive your cut directly. No splits to pay from your end (except possibly Bandcamp purchases).</div>`;
+    }
+    h+=`<div class="tbl-wrap"><table class="tbl"><thead><tr>
+      <th>Collaborator</th><th>Master %</th><th>Publishing %</th>${recouped&&others.length?'<th>Owed from pool</th>':'<th>When recouped</th>'}
     </tr></thead><tbody>`;
-    s.collabs.forEach(c=>{
-      const owed=recouped&&c.n!=='Alistair Hayes'?pool*c.m/100:null;
-      html+=`<tr>
-        <td style="font-weight:${c.n==='Alistair Hayes'?'500':'400'};">${c.n}</td>
+    s.collabs.forEach((c,i)=>{
+      const owed=recouped&&c.n!=='Alistair Hayes'&&dt!=='third-party'?pool*c.m/100:null;
+      h+=`<tr><td style="font-weight:${c.n==='Alistair Hayes'?'500':'400'};">${e(c.n)}</td>
         <td style="font-family:var(--mono);">${c.m}%</td>
         <td style="font-family:var(--mono);">${c.p}%</td>
         <td style="font-family:var(--mono);color:${owed&&owed>0?'var(--red)':'var(--text3)'};">${c.n==='Alistair Hayes'?'—':owed!==null?'$'+owed.toFixed(2):'—'}</td>
       </tr>`;
     });
-    html+=`</tbody></table></div>
-      <div class="field"><label>Total paid to collaborators ($)</label>
-        <input type="number" step="0.01" min="0" value="${s.paid||0}" oninput="patch('${s.id}','paid',parseFloat(this.value)||0)" />
+    h+=`</tbody></table></div>
+    <div class="field"><label>Total paid to collaborators ($)</label><input type="number" step="0.01" min="0" value="${s.paid||0}" oninput="patchNoRender('${s.id}','paid',parseFloat(this.value)||0);save();"/></div>`;
+    // Edit collaborators
+    h+=`<div class="sep"></div><div class="section-lbl">Edit collaborators</div>`;
+    s.collabs.forEach((c,i)=>{
+      h+=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+        <input value="${e(c.n)}" placeholder="Name" style="flex:2;" oninput="editCollab('${s.id}',${i},'n',this.value)"/>
+        <input type="number" min="0" max="100" value="${c.m}" placeholder="M%" style="flex:1;" oninput="editCollab('${s.id}',${i},'m',+this.value)"/>
+        <input type="number" min="0" max="100" value="${c.p}" placeholder="P%" style="flex:1;" oninput="editCollab('${s.id}',${i},'p',+this.value)"/>
+        ${i>0?`<button class="tx-del" onclick="removeCollab('${s.id}',${i})">×</button>`:'<div style="width:24px;"></div>'}
       </div>`;
+    });
+    h+=`<button class="btn btn-ghost btn-sm" onclick="addCollab('${s.id}')"><i class="ti ti-plus"></i> Add collaborator</button>`;
   }
-
-  document.getElementById('main').innerHTML=html;
+  document.getElementById('main').innerHTML=h;
+}
+function editCollab(id,i,field,val){
+  const s=getSongs().find(x=>x.id===id);
+  const collabs=[...s.collabs];collabs[i]={...collabs[i],[field]:val};
+  patchNoRender(id,'collabs',collabs);save();
+}
+function addCollab(id){
+  const s=getSongs().find(x=>x.id===id);
+  const collabs=[...s.collabs,{n:'',m:0,p:0}];
+  patchNoRender(id,'collabs',collabs);save();render();
+}
+function removeCollab(id,i){
+  const s=getSongs().find(x=>x.id===id);
+  const collabs=s.collabs.filter((_,idx)=>idx!==i);
+  patchNoRender(id,'collabs',collabs);save();render();
 }
 
-function renderTxSection(s,txKey,title){
-  const items=(s[txKey]||[]);
+function renderTxSection(s,txKey,title,isBandcampFlagged){
+  const items=(s[txKey]||[]),isIncome=txKey==='earnTx';
   const total=items.reduce((a,t)=>a+parseFloat(t.amount||0),0);
-  const isOpen=state.openTx[s.id+txKey];
-  const isIncome=txKey==='earnTx';
-  const color=isIncome?'var(--green)':'var(--red)';
-  let html=`<div class="tx-section">
-    <div class="tx-header${isOpen?' open':''}" onclick="state.openTx['${s.id+txKey}']=!state.openTx['${s.id+txKey}'];render();">
-      <span style="font-size:13px;font-weight:500;color:var(--text);">${title}</span>
+  const col=isIncome?'var(--green)':'var(--red)';
+  const open=S.openTx[s.id+txKey];
+  const fid=s.id+txKey;
+  let h=`<div class="tx-section">
+    <div class="tx-header${open?' open':''}" onclick="S.openTx['${fid}']=!S.openTx['${fid}'];render();">
+      <span style="font-size:13px;font-weight:500;">${title}</span>
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:13px;font-weight:500;font-family:var(--mono);color:${color};">${isIncome?'+':'-'}$${total.toFixed(2)}</span>
-        <i class="ti ti-chevron-${isOpen?'up':'down'}" style="font-size:13px;color:var(--text3);"></i>
+        <span style="font-size:13px;font-weight:500;font-family:var(--mono);color:${col};">${isIncome?'+':'-'}$${total.toFixed(2)}</span>
+        <i class="ti ti-chevron-${open?'up':'down'}" style="font-size:13px;color:var(--text3);"></i>
       </div>
     </div>`;
-  if(isOpen){
-    html+=`<div class="tx-body">`;
-    if(!items.length)html+=`<div style="font-size:12px;color:var(--text3);margin-bottom:10px;">No new transactions yet — historical figures from spreadsheet.</div>`;
+  if(open){
+    h+=`<div class="tx-body">`;
+    if(!items.length)h+=`<div style="font-size:12px;color:var(--text3);margin-bottom:10px;">No new transactions yet.</div>`;
     items.forEach(t=>{
-      html+=`<div class="tx-row">
+      const isBandcamp=isIncome&&t.source&&t.source.toLowerCase().includes('bandcamp');
+      h+=`<div class="tx-row"${isBandcamp&&isBandcampFlagged?' style="background:var(--amber-bg);"':''}>
         <div>
-          <div class="tx-desc">${t.source?`<span style="color:var(--text3);">${t.source} — </span>`:''} ${t.desc||'—'}</div>
-          <div class="tx-meta">${t.date}</div>
+          <div style="font-size:12px;color:var(--text);">${t.source?`<span style="color:var(--text3);">${e(t.source)} — </span>`:''}${e(t.desc||'—')}${isBandcamp&&isBandcampFlagged?' <span style="font-size:10px;color:var(--amber);">⚠ Split manually</span>':''}</div>
+          <div style="font-size:10px;color:var(--text3);font-family:var(--mono);">${t.date}</div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
-          <span class="tx-amount" style="color:${color};">${isIncome?'+':'-'}$${parseFloat(t.amount).toFixed(2)}</span>
+          <span style="font-size:13px;font-weight:500;font-family:var(--mono);color:${col};">${isIncome?'+':'-'}$${parseFloat(t.amount).toFixed(2)}</span>
           <button class="tx-del" onclick="delTx('${s.id}','${txKey}','${t.id}')">×</button>
         </div>
       </div>`;
     });
-    const fid=s.id+txKey;
-    html+=`<div class="tx-add-form">
-      ${isIncome?`<input id="tf-src-${fid}" placeholder="Source (e.g. Gyrostream, Bandcamp, Mandatory…)" style="margin-bottom:7px;" />`:''}
-      <input id="tf-desc-${fid}" placeholder="${isIncome?'Description (e.g. Royalties Q1 2026)':'Description (e.g. Mix + master)'}" style="margin-bottom:7px;" />
+    h+=`<div class="tx-add-form">
+      ${isIncome?`<input id="tf-src-${fid}" placeholder="Source (e.g. Gyrostream, Bandcamp, Mandatory…)" style="margin-bottom:7px;"/>`:''}
+      <input id="tf-desc-${fid}" placeholder="${isIncome?'Description (e.g. Royalties Q1 2026)':'Description (e.g. Mix + master)'}" style="margin-bottom:7px;"/>
       <div class="field-row col2" style="margin-bottom:7px;">
-        <input id="tf-amt-${fid}" type="number" step="0.01" min="0" placeholder="Amount ($)" />
-        <input id="tf-date-${fid}" type="date" value="${new Date().toISOString().slice(0,10)}" />
+        <input id="tf-amt-${fid}" type="number" step="0.01" min="0" placeholder="Amount ($)"/>
+        <input id="tf-date-${fid}" type="date" value="${new Date().toISOString().slice(0,10)}"/>
       </div>
       <button class="btn btn-primary btn-sm" onclick="submitTx('${s.id}','${txKey}','${fid}')">+ Add ${isIncome?'income':'expense'}</button>
     </div></div>`;
   }
-  html+=`</div>`;
-  return html;
+  return h+`</div>`;
 }
-
 function submitTx(songId,txKey,fid){
   const amt=parseFloat((document.getElementById('tf-amt-'+fid)||{}).value||0);
   if(!amt||isNaN(amt))return;
@@ -571,67 +557,401 @@ function submitTx(songId,txKey,fid){
   addTx(songId,txKey,{id:uid(),desc,amount:amt,date,source:src});
 }
 
-function renderTools(){
-  const sn=state.ts||'[song name]';
-  const rd=fmtRD(state.td);
-  let html=`
-    <div class="page-title">Release Tools</div>
-    <div class="page-sub">Date calculator · Email generator</div>
-    <div class="field-row col2 field" style="margin-bottom:24px;">
-      <div><label>Song name</label><input value="${state.ts}" placeholder="Song name" oninput="state.ts=this.value;save();render();" /></div>
-      <div><label>Release date</label><input type="date" value="${state.td}" oninput="state.td=this.value;save();render();" /></div>
-    </div>`;
+// ─── WRITING / IN PROGRESS ───────────────────────────────────────────────────
+function renderWriting(){
+  const ws=S.writingSongs;
+  let h=`<div class="page-title">In Progress</div><div class="page-sub">Songs being written or developed</div>`;
+  if(!ws.length)h+=`<div style="font-size:13px;color:var(--text3);margin-bottom:20px;">Nothing in progress yet — add your first song below.</div>`;
+  ws.forEach(w=>{
+    const sm=STATUS_META[w.status]||STATUS_META.idea;
+    const isEdit=S.wEditId===w.id;
+    h+=`<div class="writing-card">
+      <div class="writing-card-header" onclick="S.wEditId=S.wEditId==='${w.id}'?null:'${w.id}';render();">
+        <div style="display:flex;align-items:flex-start;gap:10px;flex:1;min-width:0;">
+          <div class="status-dot" style="background:${sm.dot};margin-top:6px;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e(w.title||'Untitled')}</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">${sm.label}${w.collabs&&w.collabs.length?` · ${e(w.collabs.map(c=>c.n).join(', '))}`:' · Solo'}</div>
+          </div>
+        </div>
+        <i class="ti ti-chevron-${isEdit?'up':'down'}" style="font-size:14px;color:var(--text3);flex-shrink:0;margin-left:10px;"></i>
+      </div>`;
+    if(isEdit){
+      h+=`<div class="writing-card-body">
+        <div class="field"><label>Title</label><input value="${e(w.title||'')}" oninput="S.writingSongs.find(x=>x.id==='${w.id}').title=this.value;save();"/></div>
+        <div class="field"><label>Status</label>
+          <select onchange="S.writingSongs.find(x=>x.id==='${w.id}').status=this.value;save();render();">
+            ${Object.entries(STATUS_META).map(([k,v])=>`<option value="${k}"${w.status===k?' selected':''}>${v.label}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>Notes</label><textarea oninput="S.writingSongs.find(x=>x.id==='${w.id}').notes=this.value;save();" style="min-height:70px;">${e(w.notes||'')}</textarea></div>
+        <div class="section-lbl">Planned collaborators</div>`;
+      (w.collabs||[]).forEach((c,i)=>{
+        h+=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <input value="${e(c.n)}" placeholder="Name" style="flex:2;" oninput="S.writingSongs.find(x=>x.id==='${w.id}').collabs[${i}].n=this.value;save();"/>
+          <input type="number" min="0" max="100" value="${c.m}" placeholder="M%" style="flex:1;" oninput="S.writingSongs.find(x=>x.id==='${w.id}').collabs[${i}].m=+this.value;save();"/>
+          <input type="number" min="0" max="100" value="${c.p}" placeholder="P%" style="flex:1;" oninput="S.writingSongs.find(x=>x.id==='${w.id}').collabs[${i}].p=+this.value;save();"/>
+          <button class="tx-del" onclick="S.writingSongs.find(x=>x.id==='${w.id}').collabs.splice(${i},1);save();render();">×</button>
+        </div>`;
+      });
+      h+=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="S.writingSongs.find(x=>x.id==='${w.id}').collabs=S.writingSongs.find(x=>x.id==='${w.id}').collabs||[];S.writingSongs.find(x=>x.id==='${w.id}').collabs.push({n:'',m:50,p:50});save();render();"><i class="ti ti-plus"></i> Add collaborator</button>
+        <button class="btn btn-green btn-sm" onclick="promoteToSong('${w.id}')"><i class="ti ti-arrow-up-circle"></i> Promote to catalogue</button>
+        <button class="btn btn-danger btn-sm" onclick="if(confirm('Delete this song?')){S.writingSongs=S.writingSongs.filter(x=>x.id!=='${w.id}');save();render();}">Delete</button>
+      </div></div>`;
+    }
+    h+=`</div>`;
+  });
 
-  if(state.td){
+  if(!S.wAddOpen){
+    h+=`<button class="btn btn-ghost" onclick="S.wAddOpen=true;render();" style="width:100%;margin-top:6px;border-style:dashed;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-plus"></i> Add song in progress</button>`;
+  } else {
+    h+=`<div class="add-form" style="margin-top:6px;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:14px;">New song in progress</div>
+      <div class="field"><label>Working title</label><input id="wa-t" placeholder="Working title (can be untitled)"/></div>
+      <div class="field"><label>Status</label><select id="wa-s">${Object.entries(STATUS_META).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}</select></div>
+      <div style="display:flex;gap:8px;"><button class="btn btn-primary" style="flex:1;" onclick="submitWritingSong()">Add</button><button class="btn btn-ghost" onclick="S.wAddOpen=false;render();">Cancel</button></div>
+    </div>`;
+  }
+  document.getElementById('main').innerHTML=h;
+}
+function submitWritingSong(){
+  const title=(document.getElementById('wa-t')||{}).value||'Untitled';
+  const status=(document.getElementById('wa-s')||{}).value||'idea';
+  S.writingSongs.push({id:'ws-'+Date.now(),title:title.trim()||'Untitled',status,collabs:[],notes:'',createdAt:new Date().toISOString().slice(0,10)});
+  S.wAddOpen=false;S.wEditId=S.writingSongs[S.writingSongs.length-1].id;save();render();
+}
+function promoteToSong(wsId){
+  const w=S.writingSongs.find(x=>x.id===wsId);if(!w)return;
+  if(!confirm(`Promote "${w.title}" to the catalogue? It'll be removed from In Progress.`))return;
+  const id='promoted-'+wsId;
+  const collabs=[{n:'Alistair Hayes',m:100,p:100},...(w.collabs||[]).filter(c=>c.n)].map((c,i)=>i===0&&(w.collabs||[]).length?{...c,m:100-(w.collabs||[]).filter(c=>c.n).reduce((a,x)=>a+x.m,0),p:100-(w.collabs||[]).filter(c=>c.n).reduce((a,x)=>a+x.p,0)}:c);
+  S.extras.push({id,title:w.title,collabs:w.collabs&&w.collabs.length?[{n:'Alistair Hayes',m:100-(w.collabs.filter(c=>c.n).reduce((a,x)=>a+x.m,0)),p:100-(w.collabs.filter(c=>c.n).reduce((a,x)=>a+x.p,0))},...w.collabs.filter(c=>c.n)]:[ {n:'Alistair Hayes',m:100,p:100}],baseExp:0,baseEarn:0,paid:0,isrc:'',upc:''});
+  S.writingSongs=S.writingSongs.filter(x=>x.id!==wsId);
+  save();openSong(id);
+}
+
+// ─── FINANCE ─────────────────────────────────────────────────────────────────
+function renderFinance(){
+  const songs=getSongs();
+  const entries=S.financeEntries.filter(fe=>{
+    const songMatch=!S.fSong||fe.songId===S.fSong||S.fSong==='general'&&!fe.songId;
+    const typeMatch=!S.fType||fe.type===S.fType;
+    return songMatch&&typeMatch;
+  }).sort((a,b)=>b.date.localeCompare(a.date));
+  const allEntries=S.financeEntries;
+  const totExp=allEntries.filter(e=>e.type==='expense').reduce((a,e)=>a+parseFloat(e.amount||0),0);
+  const totInc=allEntries.filter(e=>e.type==='income').reduce((a,e)=>a+parseFloat(e.amount||0),0);
+
+  let h=`<div class="page-title">Finance</div><div class="page-sub">Personal finance log with song tagging</div>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-label">Total income logged</div><div class="stat-value green">$${totInc.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Total expenses logged</div><div class="stat-value amber">$${totExp.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Net</div><div class="stat-value ${totInc-totExp>=0?'green':''}">$${(totInc-totExp).toFixed(2)}</div></div>
+  </div>
+  <div class="filter-row">
+    <select onchange="S.fSong=this.value;render();">
+      <option value="">All songs</option>
+      <option value="general"${S.fSong==='general'?' selected':''}>General / business</option>
+      ${songs.map(s=>`<option value="${s.id}"${S.fSong===s.id?' selected':''}>${e(s.title.length>40?s.title.slice(0,39)+'…':s.title)}</option>`).join('')}
+    </select>
+    <select onchange="S.fType=this.value;render();">
+      <option value="">All types</option>
+      <option value="income"${S.fType==='income'?' selected':''}>Income</option>
+      <option value="expense"${S.fType==='expense'?' selected':''}>Expenses</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <button class="btn btn-primary btn-sm" onclick="S.finAddOpen=!S.finAddOpen;render();"><i class="ti ti-plus" style="font-size:12px;margin-right:4px;"></i>Add entry</button>
+    <button class="btn btn-ghost btn-sm" onclick="S.csvOpen=!S.csvOpen;render();"><i class="ti ti-upload" style="font-size:12px;margin-right:4px;"></i>Import CSV</button>
+  </div>`;
+
+  if(S.finAddOpen){
+    h+=`<div class="add-form" style="margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:14px;">Add entry</div>
+      <div class="field-row col2 field">
+        <div><label>Date</label><input id="fa-d" type="date" value="${new Date().toISOString().slice(0,10)}"/></div>
+        <div><label>Type</label><select id="fa-tp"><option value="expense">Expense</option><option value="income">Income</option></select></div>
+      </div>
+      <div class="field"><label>Description</label><input id="fa-desc" placeholder="e.g. Mix + master"/></div>
+      <div class="field-row col2 field">
+        <div><label>Amount ($)</label><input id="fa-amt" type="number" step="0.01" min="0" placeholder="0.00"/></div>
+        <div><label>Source / vendor</label><input id="fa-src" placeholder="e.g. Gyrostream"/></div>
+      </div>
+      <div class="field"><label>Song tag</label>
+        <select id="fa-song">
+          <option value="">General / business</option>
+          ${songs.map(s=>`<option value="${s.id}">${e(s.title.length>50?s.title.slice(0,49)+'…':s.title)}</option>`).join('')}
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;"><button class="btn btn-primary" style="flex:1;" onclick="submitFinEntry()">Add</button><button class="btn btn-ghost" onclick="S.finAddOpen=false;render();">Cancel</button></div>
+    </div>`;
+  }
+
+  if(S.csvOpen){
+    h+=`<div style="border:0.5px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Import CSV</div>
+      <div class="hint" style="margin-bottom:12px;">Add a <strong>Song</strong> column to your spreadsheet with the exact song title (or leave blank for general). Required columns: <code>Date, Type (income/expense), Description, Amount</code>. Optional: <code>Source, Song</code>.</div>
+      <div class="csv-drop" onclick="document.getElementById('csv-file').click()">
+        <i class="ti ti-upload" style="font-size:24px;color:var(--text3);display:block;margin-bottom:6px;"></i>
+        <div style="font-size:13px;color:var(--text2);">Click to upload CSV file</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">or export from Google Sheets / Excel as CSV</div>
+      </div>`;
+    if(S.csvData){
+      h+=renderCSVPreview(songs);
+    }
+    h+=`</div>`;
+  }
+
+  if(!entries.length){
+    h+=`<div style="font-size:13px;color:var(--text3);text-align:center;padding:30px 0;">No entries yet — add one above or import a CSV.</div>`;
+  } else {
+    h+=`<div class="tbl-wrap"><table class="tbl" style="table-layout:fixed;">
+      <thead><tr><th style="width:90px;">Date</th><th style="width:70px;">Type</th><th>Description</th><th style="width:90px;">Amount</th><th style="width:100px;">Song</th><th style="width:30px;"></th></tr></thead>
+      <tbody>`;
+    entries.forEach(fe=>{
+      const song=songs.find(s=>s.id===fe.songId);
+      const isInc=fe.type==='income';
+      h+=`<tr>
+        <td style="font-family:var(--mono);font-size:11px;">${fe.date}</td>
+        <td><span class="badge ${isInc?'green':'amber'}" style="font-size:9px;">${isInc?'Income':'Expense'}</span></td>
+        <td>${fe.source?`<span style="color:var(--text3);">${e(fe.source)}</span> — `:''}${e(fe.description||'—')}</td>
+        <td style="font-family:var(--mono);color:${isInc?'var(--green)':'var(--text2)'};">${isInc?'+':'-'}$${parseFloat(fe.amount||0).toFixed(2)}</td>
+        <td style="font-size:11px;color:var(--text3);">${song?e(song.title.length>15?song.title.slice(0,14)+'…':song.title):'General'}</td>
+        <td><button class="tx-del" onclick="S.financeEntries=S.financeEntries.filter(x=>x.id!=='${fe.id}');save();render();">×</button></td>
+      </tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }
+  document.getElementById('main').innerHTML=h;
+}
+function submitFinEntry(){
+  const date=(document.getElementById('fa-d')||{}).value||new Date().toISOString().slice(0,10);
+  const type=(document.getElementById('fa-tp')||{}).value||'expense';
+  const description=(document.getElementById('fa-desc')||{}).value||'';
+  const amount=parseFloat((document.getElementById('fa-amt')||{}).value||0);
+  const source=(document.getElementById('fa-src')||{}).value||'';
+  const songId=(document.getElementById('fa-song')||{}).value||'';
+  if(!amount||isNaN(amount))return;
+  S.financeEntries.push({id:uid(),date,type,description,amount,source,songId});
+  S.finAddOpen=false;save();render();
+}
+
+// CSV Import
+function parseCSVRow(row){
+  const res=[];let cur='',inQ=false;
+  for(const c of row){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){res.push(cur.trim());cur='';}else{cur+=c;}}
+  res.push(cur.trim());return res;
+}
+function handleCSVFile(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const text=e.target.result;
+    const lines=text.trim().split(/\r?\n/).filter(l=>l.trim());
+    if(lines.length<2){alert('CSV needs at least a header row and one data row.');return;}
+    const headers=parseCSVRow(lines[0]);
+    const rows=lines.slice(1).map(l=>parseCSVRow(l));
+    S.csvData={headers,rows,map:{}};
+    // Auto-detect columns
+    const hn=headers.map(h=>h.toLowerCase());
+    const find=(terms)=>{for(const t of terms){const i=hn.findIndex(h=>h.includes(t));if(i>=0)return i;}return-1;};
+    S.csvData.map={
+      date:find(['date']),type:find(['type']),
+      description:find(['description','desc','name','item']),
+      amount:find(['amount','amt','total','sum']),
+      source:find(['source','vendor','from','platform']),
+      song:find(['song','track']),
+    };
+    save();render();
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+function renderCSVPreview(songs){
+  if(!S.csvData)return'';
+  const{headers,rows,map}=S.csvData;
+  const fieldKeys=['date','type','description','amount','source','song'];
+  const fieldLabels={date:'Date',type:'Type (income/expense)',description:'Description',amount:'Amount',source:'Source',song:'Song tag'};
+  let h=`<div class="section-lbl" style="margin-top:8px;">Map columns</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">`;
+  fieldKeys.forEach(k=>{
+    h+=`<div><label class="field-lbl">${fieldLabels[k]}</label>
+      <select onchange="S.csvData.map['${k}']=+this.value;save();">
+        <option value="-1">— skip —</option>
+        ${headers.map((hd,i)=>`<option value="${i}"${map[k]===i?' selected':''}>${e(hd)}</option>`).join('')}
+      </select></div>`;
+  });
+  h+=`</div><div class="section-lbl">Preview (first 3 rows)</div><div class="csv-preview"><table><thead><tr>${headers.map(hd=>`<th>${e(hd)}</th>`).join('')}</tr></thead><tbody>`;
+  rows.slice(0,3).forEach(r=>{h+=`<tr>${r.map(c=>`<td>${e(c)}</td>`).join('')}</tr>`;});
+  h+=`</tbody></table></div>
+  <div style="display:flex;gap:8px;">
+    <button class="btn btn-primary btn-sm" onclick="importCSVRows()">Import ${rows.length} rows</button>
+    <button class="btn btn-ghost btn-sm" onclick="S.csvData=null;save();render();">Cancel</button>
+  </div>`;
+  return h;
+}
+function importCSVRows(){
+  if(!S.csvData)return;
+  const{rows,map}=S.csvData;
+  const songs=getSongs();
+  let imported=0;
+  rows.forEach(r=>{
+    const get=(k)=>map[k]>=0&&r[map[k]]!==undefined?r[map[k]].trim():'';
+    const dateVal=get('date');
+    const typeVal=get('type').toLowerCase();
+    const amtStr=get('amount').replace(/[$,\s]/g,'');
+    const amount=parseFloat(amtStr);
+    if(!amount||isNaN(amount))return;
+    const type=typeVal.includes('inc')||typeVal.includes('rev')||typeVal.includes('in')?'income':'expense';
+    // Match song by title
+    const songTitle=get('song');
+    const matchedSong=songTitle?songs.find(s=>s.title.toLowerCase()===songTitle.toLowerCase()||s.title.toLowerCase().includes(songTitle.toLowerCase())):null;
+    S.financeEntries.push({id:uid(),date:dateVal||new Date().toISOString().slice(0,10),type,description:get('description'),amount,source:get('source'),songId:matchedSong?matchedSong.id:''});
+    imported++;
+  });
+  S.csvData=null;S.csvOpen=false;save();
+  alert(`Imported ${imported} entries.`);render();
+}
+
+// ─── TOOLS ───────────────────────────────────────────────────────────────────
+function renderTools(){
+  const sn=S.ts||'[song name]',rd=fmtRD(S.td);
+  let h=`<div class="page-title">Release Tools</div><div class="page-sub">Date calculator · Email drafts</div>
+  <div class="field-row col2 field" style="margin-bottom:24px;">
+    <div><label>Song name</label><input value="${e(S.ts)}" placeholder="Song name" oninput="S.ts=this.value;save();renderToolsSoft();"/></div>
+    <div><label>Release date</label><input type="date" value="${e(S.td)}" oninput="S.td=this.value;save();render();"/></div>
+  </div>`;
+
+  if(S.td){
     const today=today0();
-    html+=`<div style="margin-bottom:24px;">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;">Release Timeline</div>`;
+    h+=`<div class="section-lbl">Release Timeline</div>`;
     ML.forEach(m=>{
-      const dt=new Date(state.td+'T00:00:00');dt.setDate(dt.getDate()+m.d);
+      const dt=new Date(S.td+'T00:00:00');dt.setDate(dt.getDate()+m.d);
       const isPast=dt<today,isToday=dt.toDateString()===today.toDateString(),isRel=m.d===0;
       const bg=isRel?'var(--green-bg)':isToday?'var(--blue-bg)':'transparent';
-      const border=isRel?`border:0.5px solid var(--green-border);`:isToday?`border:0.5px solid var(--border2);`:'';
       const lc=isRel?'var(--green)':isToday?'var(--blue)':'var(--text)';
-      html+=`<div class="tl-row" style="background:${bg};${border}opacity:${isPast&&!isToday?0.4:1};">
-        <span class="tl-label" style="color:${lc};">${m.l}</span>
+      const border=isRel?'border:0.5px solid var(--green-border);':isToday?'border:0.5px solid var(--blue-border);':'';
+      h+=`<div class="tl-row" style="background:${bg};${border}opacity:${isPast&&!isToday?0.4:1};">
+        <span style="font-size:13px;color:${lc};">${m.l}</span>
         <span class="tl-date">${dt.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}</span>
       </div>`;
     });
-    html+=`</div>`;
+    h+=`<div style="margin-bottom:24px;"></div>`;
   }
 
-  html+=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;">Email Drafts</div>`;
-  EMAILS.forEach(em=>{
-    const sub=em.sub(sn),body=em.body(sn,rd);
-    const txt=`Subject: ${sub}\n\n${body}`;
-    const isOpen=state.openEmails[em.k];
-    const btnId=`copy-${em.k}`;
-    html+=`<div class="email-item">
-      <div class="email-header${isOpen?' open':''}" onclick="state.openEmails['${em.k}']=!state.openEmails['${em.k}'];render();">
-        <div>
-          <div class="email-title">${em.lbl}</div>
-          <div class="email-when">${em.when}</div>
+  const readyCount=EMAIL_DEFAULTS.filter(em=>isReady(em.k)).length;
+  h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <div class="section-lbl" style="margin-bottom:0;">Email Drafts</div>
+    <div style="font-size:11px;color:var(--green);font-family:var(--mono);">${readyCount}/${EMAIL_DEFAULTS.length} ready to send</div>
+  </div>
+  <div class="hint" style="margin-bottom:14px;">Tick emails as ready — your send script can read the JSON backup to know which are approved.</div>`;
+
+  EMAIL_DEFAULTS.forEach(em=>{
+    const{subject,body}=getEmailContent(em,sn,S.td);
+    const isOpen=S.openEmails[em.k];
+    const isEditing=S.editingEmails[em.k];
+    const ready=isReady(em.k);
+    const bid=`copy-${em.k}`;
+    h+=`<div class="email-item" style="${ready?'border-color:var(--green-border);':''}">
+      <div class="email-header${isOpen?' open':''}" onclick="toggleEmail('${em.k}')">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:500;color:${ready?'var(--green)':'var(--text)'};">${ready?'✓ ':''} ${e(em.lbl)}</div>
+          <div style="font-size:10px;color:var(--text3);">${e(em.when)}</div>
         </div>
-        <i class="ti ti-chevron-${isOpen?'up':'down'}" style="font-size:14px;color:var(--text3);"></i>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <label class="ready-label${ready?' checked':''}" onclick="event.stopPropagation();" title="Mark ready to send">
+            <input type="checkbox" ${ready?'checked':''} onchange="toggleReady('${em.k}',this.checked)" style="width:auto;"/>
+            Ready
+          </label>
+          <i class="ti ti-chevron-${isOpen?'up':'down'}" style="font-size:13px;color:var(--text3);"></i>
+        </div>
       </div>`;
     if(isOpen){
-      html+=`<div class="email-body">
-        <div class="email-subject"><span style="color:var(--text);font-weight:500;">Subject: </span>${sub}</div>
-        <pre class="email-pre">${body}</pre>
-        <button id="${btnId}" class="btn btn-ghost btn-sm" onclick="copyText(${JSON.stringify(txt)},'${btnId}')">Copy email</button>
-      </div>`;
+      h+=`<div class="email-body-wrap">`;
+      if(isEditing){
+        const ed=S.emailEdits[em.k]||{};
+        h+=`<div class="field"><label>Subject</label><textarea id="es-${em.k}" style="min-height:42px;" oninput="updateEmailEdit('${em.k}','subject',this.value)">${e(ed.subject||subject)}</textarea></div>
+        <div class="field"><label>Body</label><textarea id="eb-${em.k}" style="min-height:200px;" oninput="updateEmailEdit('${em.k}','body',this.value)">${e(ed.body||body)}</textarea></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="saveEmailEdit('${em.k}')">Save edits</button>
+          <button class="btn btn-ghost btn-sm" onclick="resetEmailEdit('${em.k}')">Reset to default</button>
+          <button class="btn btn-ghost btn-sm" onclick="S.editingEmails['${em.k}']=false;render();">Cancel</button>
+        </div>`;
+      } else {
+        const hasEdit=S.emailEdits[em.k]&&(S.emailEdits[em.k].subject||S.emailEdits[em.k].body);
+        h+=`<div style="font-size:11px;color:var(--text2);margin-bottom:8px;"><span style="font-weight:500;color:var(--text);">Subject: </span>${e(subject)}</div>
+        ${hasEdit?'<div style="font-size:10px;color:var(--amber);margin-bottom:6px;">✎ Custom edit saved</div>':''}
+        <pre class="email-pre">${e(body)}</pre>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="${bid}" class="btn btn-ghost btn-sm" onclick="copyBtn('Subject: '+${JSON.stringify(subject)}+'\\n\\n'+${JSON.stringify(body)},'${bid}')">Copy email</button>
+          <button class="btn btn-ghost btn-sm" onclick="S.editingEmails['${em.k}']=true;render();">✎ Edit</button>
+        </div>`;
+      }
+      h+=`</div>`;
     }
-    html+=`</div>`;
+    h+=`</div>`;
   });
-
-  document.getElementById('main').innerHTML=html;
+  document.getElementById('main').innerHTML=h;
+}
+function toggleEmail(k){S.openEmails[k]=!S.openEmails[k];render();}
+function toggleReady(k,val){if(!S.emailEdits[k])S.emailEdits[k]={};S.emailEdits[k].readyToSend=val;save();render();}
+function updateEmailEdit(k,field,val){if(!S.emailEdits[k])S.emailEdits[k]={};S.emailEdits[k][field]=val;}
+function saveEmailEdit(k){
+  if(!S.emailEdits[k])S.emailEdits[k]={};
+  const s=document.getElementById('es-'+k),b=document.getElementById('eb-'+k);
+  if(s)S.emailEdits[k].subject=s.value;
+  if(b)S.emailEdits[k].body=b.value;
+  S.editingEmails[k]=false;save();render();
+}
+function resetEmailEdit(k){
+  if(S.emailEdits[k]){delete S.emailEdits[k].subject;delete S.emailEdits[k].body;}
+  S.editingEmails[k]=false;save();render();
+}
+function renderToolsSoft(){
+  // Soft re-render: just update email previews without full render
+  // Just do a full render for simplicity
+  render();
 }
 
+// ─── EXPORT / IMPORT ─────────────────────────────────────────────────────────
+function exportJSON(){
+  const data={patches:S.patches,extras:S.extras,writingSongs:S.writingSongs,financeEntries:S.financeEntries,emailEdits:S.emailEdits,ts:S.ts,td:S.td,exportedAt:new Date().toISOString()};
+  const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data,null,2));a.download='daphnie-hub-backup.json';a.click();
+}
+function importJSON(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.patches)S.patches=d.patches;if(d.extras)S.extras=d.extras;
+      if(d.writingSongs)S.writingSongs=d.writingSongs;if(d.financeEntries)S.financeEntries=d.financeEntries;
+      if(d.emailEdits)S.emailEdits=d.emailEdits;if(d.ts)S.ts=d.ts;if(d.td)S.td=d.td;
+      save();render();alert('Backup restored successfully.');
+    }catch(err){alert('Invalid backup file.');}
+  };
+  reader.readAsText(file);input.value='';
+}
+function exportCSV(){
+  const songs=getSongs();
+  const rows=[['Title','ISRC','UPC','Distro Company','Distro Split%','Distro Years','Distro Type','Hist.Expenses','New Expenses','Hist.Income','New Income','Total Expenses','Total Income','Net Pool','Recouped','Collaborators']];
+  songs.forEach(s=>{
+    const{totalExp,totalEarn,pool,recouped,expTx,earnTx}=calcTotals(s);
+    rows.push([s.title,s.isrc||'',s.upc||'',s.distroCompany||'',s.distroSplit||'',s.distroYears||'',s.distroType||'self',(s.baseExp||0).toFixed(2),expTx.toFixed(2),(s.baseEarn||0).toFixed(2),earnTx.toFixed(2),totalExp.toFixed(2),totalEarn.toFixed(2),pool.toFixed(2),recouped?'Yes':'No',s.collabs.filter(c=>c.n!=='Alistair Hayes').map(c=>`${c.n} M:${c.m}% P:${c.p}%`).join('; ')]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='daphnie-splits.csv';a.click();
+}
+
+// ─── MAIN RENDER ─────────────────────────────────────────────────────────────
 function render(){
   renderNav();
-  if(state.view==='catalogue')renderCatalogue();
-  else if(state.view==='song')renderSong();
-  else if(state.view==='tools')renderTools();
+  if(S.view==='catalogue')renderCatalogue();
+  else if(S.view==='song')renderSong();
+  else if(S.view==='writing')renderWriting();
+  else if(S.view==='finance')renderFinance();
+  else if(S.view==='tools')renderTools();
 }
 
 load();render();
