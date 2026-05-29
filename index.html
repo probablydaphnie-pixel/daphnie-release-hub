@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daphnie Release Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0e0f11;--bg2:#161719;--bg3:#1e2023;--bg4:#26292e;
+  --border:#2e3238;--border2:#383d44;
+  --text:#e8eaed;--text2:#9aa0ab;--text3:#5a6072;
+  --green:#34d399;--green-bg:#0d2b20;--green-border:#1a4a35;
+  --red:#f87171;--red-bg:#2b0d0d;
+  --amber:#fbbf24;--amber-bg:#2b2008;
+  --blue:#60a5fa;--blue-bg:#0d1b2b;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+  --r:10px;--r-sm:6px;--r-lg:14px;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;}
+input,select,textarea{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-family:var(--font);font-size:13px;padding:7px 10px;outline:none;width:100%;}
+input:focus,select:focus{border-color:#4a5568;}
+input[type=range]{padding:0;background:transparent;-webkit-appearance:none;height:4px;border-radius:2px;border:none;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--bg4);border-radius:2px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--green);margin-top:-5px;cursor:pointer;}
+button{font-family:var(--font);cursor:pointer;}
+pre{font-family:var(--mono);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
+
+/* LAYOUT */
+.shell{display:grid;grid-template-columns:220px 1fr;height:100vh;overflow:hidden;}
+.sidebar{background:var(--bg2);border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.main{overflow-y:auto;padding:28px 32px;}
+
+/* SIDEBAR */
+.logo{padding:22px 18px 16px;border-bottom:0.5px solid var(--border);}
+.logo-word{font-size:13px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);display:block;}
+.logo-sub{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);}
+.nav{padding:12px 10px;flex:1;overflow-y:auto;}
+.nav-section{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);padding:10px 8px 5px;font-weight:500;}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:7px 10px;border:none;background:transparent;color:var(--text2);border-radius:var(--r-sm);font-size:13px;text-align:left;transition:all 0.12s;}
+.nav-btn:hover{background:var(--bg3);color:var(--text);}
+.nav-btn.active{background:var(--bg4);color:var(--text);}
+.nav-btn i{font-size:15px;flex-shrink:0;}
+.nav-song{padding:4px 8px 4px 36px;font-size:12px;color:var(--text3);border-radius:var(--r-sm);cursor:pointer;transition:all 0.1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav-song:hover{color:var(--text2);}
+.nav-song.active{color:var(--green);}
+.sidebar-bottom{padding:14px;border-top:0.5px solid var(--border);}
+
+/* PAGE HEADER */
+.page-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px;}
+.page-sub{font-size:13px;color:var(--text3);margin-bottom:24px;}
+
+/* CARDS */
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
+.card-sm{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+.stat-value{font-size:22px;font-weight:600;font-family:var(--mono);}
+.stat-value.green{color:var(--green);}
+.stat-value.amber{color:var(--amber);}
+
+/* SONG LIST */
+.song-row{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all 0.12s;margin-bottom:5px;}
+.song-row:hover{border-color:var(--border2);background:var(--bg3);}
+.song-row-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.song-row-sub{font-size:11px;color:var(--text3);margin-bottom:8px;}
+.bar{height:3px;background:var(--bg4);border-radius:2px;}
+.bar-fill{height:100%;border-radius:2px;transition:width 0.4s ease;}
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 9px;border-radius:100px;font-family:var(--mono);letter-spacing:0.03em;}
+.badge.green{background:var(--green-bg);color:var(--green);border:0.5px solid var(--green-border);}
+.badge.gray{background:var(--bg4);color:var(--text3);}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--bg3);border-radius:var(--r-sm);padding:3px;margin-bottom:20px;width:fit-content;}
+.tab-btn{padding:5px 14px;font-size:12px;border:none;border-radius:5px;background:transparent;color:var(--text3);font-family:var(--font);transition:all 0.12s;font-weight:400;}
+.tab-btn.active{background:var(--bg2);color:var(--text);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,0.4);}
+
+/* FORM ROWS */
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px;font-weight:500;}
+.field-row{display:grid;gap:10px;}
+.field-row.col2{grid-template-columns:1fr 1fr;}
+.field-row.col3{grid-template-columns:1fr 1fr 1fr;}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:var(--r-sm);font-size:13px;font-family:var(--font);border:0.5px solid;transition:all 0.12s;}
+.btn-primary{background:var(--bg4);border-color:var(--border2);color:var(--text);font-weight:500;}
+.btn-primary:hover{background:#30363f;}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text2);}
+.btn-ghost:hover{border-color:var(--border2);color:var(--text);}
+.btn-green{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+.btn-sm{padding:5px 12px;font-size:12px;}
+
+/* BACK BTN */
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:transparent;border:none;padding:0 0 14px;transition:color 0.1s;}
+.back-btn:hover{color:var(--text2);}
+
+/* RECOUP BAR */
+.recoup-box{border-radius:var(--r);padding:12px 15px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.recoup-box.recouped{background:var(--green-bg);border:0.5px solid var(--green-border);}
+.recoup-box.pending{background:var(--bg3);border:0.5px solid var(--border);}
+
+/* GRID STATS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.mini-stat{background:var(--bg3);border-radius:var(--r-sm);padding:10px 12px;}
+.mini-stat-label{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px;}
+.mini-stat-value{font-size:15px;font-weight:600;font-family:var(--mono);}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-weight:500;background:var(--bg3);border-bottom:0.5px solid var(--border);}
+.tbl td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text2);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--text);}
+.tbl-wrap{border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+
+/* TX LIST */
+.tx-section{border:0.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:10px;overflow:hidden;}
+.tx-header{padding:11px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.1s;}
+.tx-header:hover{background:var(--bg3);}
+.tx-header.open{background:var(--bg3);}
+.tx-body{border-top:0.5px solid var(--border);padding:12px 14px;}
+.tx-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--border);}
+.tx-row:last-of-type{border-bottom:none;}
+.tx-desc{font-size:12px;color:var(--text);}
+.tx-meta{font-size:10px;color:var(--text3);font-family:var(--mono);}
+.tx-amount{font-size:13px;font-weight:500;font-family:var(--mono);}
+.tx-del{background:transparent;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;}
+.tx-del:hover{color:var(--red);}
+.tx-add-form{margin-top:12px;border-top:0.5px solid var(--border);padding-top:12px;}
+
+/* EMAIL */
+.email-item{border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:5px;overflow:hidden;}
+.email-header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.1s;}
+.email-header:hover{background:var(--bg3);}
+.email-header.open{background:var(--bg3);}
+.email-title{font-size:13px;font-weight:500;color:var(--text);}
+.email-when{font-size:10px;color:var(--text3);}
+.email-body{border-top:0.5px solid var(--border);padding:14px;}
+.email-subject{font-size:12px;color:var(--text2);margin-bottom:10px;}
+.email-pre{font-size:12px;color:var(--text);background:var(--bg3);padding:12px 14px;border-radius:var(--r-sm);white-space:pre-wrap;line-height:1.7;margin-bottom:10px;font-family:var(--mono);}
+
+/* TIMELINE */
+.tl-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;border-radius:var(--r-sm);margin-bottom:2px;transition:opacity 0.1s;}
+.tl-label{font-size:13px;}
+.tl-date{font-size:12px;color:var(--text3);font-family:var(--mono);}
+
+/* SLIDER LABELS */
+.slider-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);margin-top:3px;}
+
+/* ADD SONG FORM */
+.add-form{border:0.5px dashed var(--border2);border-radius:var(--r-lg);padding:16px;margin-top:6px;}
+.add-form-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px;}
+
+/* SEARCH */
+.search-row{display:flex;gap:8px;margin-bottom:14px;}
+.search-row input{flex:1;}
+
+/* DISTRO SLIDER */
+.dist-box{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:14px;}
+.dist-top{display:flex;justify-content:space-between;margin-bottom:8px;}
+.dist-pct{font-size:15px;font-weight:600;font-family:var(--mono);color:var(--amber);}
+
+/* TOOLTIP */
+.tip{font-size:10px;color:var(--text3);margin-top:4px;}
+
+@media(max-width:700px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .main{padding:16px;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .grid2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <span class="logo-word">Daphnie</span>
+      <span class="logo-sub">Release Hub</span>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sidebar-bottom">
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()" style="width:100%;display:flex;align-items:center;gap:7px;justify-content:center;">
+        <i class="ti ti-download" style="font-size:14px;"></i> Export CSV
+      </button>
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const BS=[
+  {id:'28',title:'28',collabs:[{n:'Alistair Hayes',m:100,p:75},{n:'Thomas Bleach',m:0,p:25}],dist:20,baseExp:1443.46,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'stay-long',title:'Stay Long',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jiwon Simpkins',m:50,p:50}],dist:20,baseExp:250,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'claps',title:'This Song Has Claps In It',collabs:[{n:'Alistair Hayes',m:95,p:50},{n:'Ben Siva',m:5,p:50}],dist:20,baseExp:1759.67,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'alive',title:'Alive (not dead)',collabs:[{n:'Alistair Hayes',m:90,p:50},{n:'Ross James',m:10,p:50}],dist:20,baseExp:873.69,baseEarn:2.30,paid:0,isrc:'',upc:''},
+  {id:'cupid-bp',title:'Cupid (Barley Passable Redesign)',collabs:[{n:'Alistair Hayes',m:70,p:100},{n:'Barley Passable',m:30,p:0}],dist:20,baseExp:300,baseEarn:0,paid:0.32,isrc:'',upc:''},
+  {id:'wanna-be',title:'Wanna Be (with) You',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Max Jacobs',m:0,p:50}],dist:20,baseExp:1878.99,baseEarn:0.74,paid:0,isrc:'',upc:''},
+  {id:'ppopimf',title:"Perfect Piece Of Person I'm Made For",collabs:[{n:'Alistair Hayes',m:100,p:50},{n:"Will O'Donohue",m:0,p:50}],dist:20,baseExp:760.09,baseEarn:3.20,paid:0,isrc:'',upc:''},
+  {id:'cupid',title:'Cupid',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:769.32,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'minimalism',title:'Minimalism',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Harry Patrick',m:0,p:50}],dist:20,baseExp:1435.17,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'chasing',title:'Chasing Shadows',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:"Will O'Donohue",m:50,p:50}],dist:20,baseExp:1602.87,baseEarn:823.99,paid:0.49,isrc:'',upc:''},
+  {id:'easy',title:'Easy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Ben Siva',m:50,p:50}],dist:20,baseExp:1584.99,baseEarn:150,paid:0.49,isrc:'',upc:''},
+  {id:'red',title:'Red to be Blue',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Holly Hebe',m:50,p:50}],dist:20,baseExp:255.73,baseEarn:0.74,paid:0.85,isrc:'',upc:''},
+  {id:'mixtape',title:'the start of a mixtape',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'sugarcoat',title:'Sugarcoat',collabs:[{n:'Alistair Hayes',m:55.5,p:55},{n:'Jack Howe',m:37,p:37},{n:'Joel Quartermain',m:5,p:5}],dist:20,baseExp:4491.06,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'scooters',title:'Scooters + Shins',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:494.59,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'dizzy',title:'Dizzy',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Jerome Blaze',m:50,p:50}],dist:20,baseExp:5115.51,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'late',title:'Late',collabs:[{n:'Alistair Hayes',m:100,p:50},{n:'Jack Howe',m:0,p:50}],dist:20,baseExp:4934.61,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'yprgt',title:"You're Pretty Great And I Normally Hate Things",collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Budo Miller',m:50,p:50}],dist:20,baseExp:2009.57,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'digbs',title:'Digital Bullshit',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:1901.28,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'trailers',title:"i don't watch trailers cos they oversell and give away the whole story",collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:755.09,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'confessions',title:'Confessions To An Ex',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Harry Patrick',m:50,p:50}],dist:20,baseExp:4264.10,baseEarn:93.88,paid:0,isrc:'',upc:''},
+  {id:'lastsong',title:"the last song i'll ever write for you (i promise)",collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:2633.35,baseEarn:93.14,paid:0,isrc:'',upc:''},
+  {id:'lights',title:'Lights Out Baby',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:0,baseEarn:0,paid:0,isrc:'',upc:''},
+  {id:'serotonin',title:'Serotonin',collabs:[{n:'Alistair Hayes',m:50,p:50},{n:'Sabrina Toon',m:50,p:50}],dist:20,baseExp:535.25,baseEarn:0,paid:0.48,isrc:'',upc:''},
+  {id:'ctae-vinyl',title:'Confessions To An Ex Vinyl',collabs:[{n:'Alistair Hayes',m:100,p:100}],dist:20,baseExp:3199.58,baseEarn:931.41,paid:0,isrc:'',upc:''},
+];
+
+const ML=[
+  {l:'9 weeks before',d:-63},{l:'7 weeks before',d:-49},{l:'5 weeks before',d:-35},
+  {l:'4 weeks before',d:-28},{l:'2 weeks before',d:-14},{l:'1 week before',d:-7},
+  {l:'Day before',d:-1},{l:'Release day',d:0},{l:'Week 1',d:7},
+  {l:'Week 2',d:14},{l:'Week 3',d:21},{l:'Week 4',d:28},
+  {l:'Weekend 4',d:30},{l:'Week 5',d:35},{l:'Week 6',d:42},{l:'Final day',d:49},
+];
+
+const EMAILS=[
+  {k:'distro-confirm',lbl:'Distro: confirm release date',when:'7 weeks before',sub:s=>`Release date confirmation — "${s}"`,body:(s,rd)=>`Hi team,\n\nHope you're well! Just confirming that "${s}" is targeting ${rd} for release.\n\nCan you confirm this is locked in on your end?\n\nThanks!\nAlistair`},
+  {k:'isrc-upc',lbl:'Distro: request ISRC + UPC',when:'After upload to distro',sub:s=>`ISRC and UPC request — "${s}"`,body:(s,rd)=>`Hi team,\n\n"${s}" has now been distributed — could you please send through the ISRC and UPC codes?\n\nI need them for APRA registration, Genius, and pitching.\n\nCheers,\nAlistair`},
+  {k:'mailing-list',lbl:'Distro: mailing list request',when:'Day before @ 3:30pm',sub:s=>`Updated mailing list — "${s}" out tomorrow`,body:(s,rd)=>`Hi team,\n\n"${s}" is out tomorrow! Could you please send through the updated mailing list so I can reach out to new sign-ups?\n\nAppreciate it!\nAlistair\n\n[Scheduled send: 3:30pm the day before release]`},
+  {k:'jjj-first',lbl:'Triple j: first play pitch',when:'4 weeks before',sub:s=>`First play consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nI'd love to submit "${s}" for triple j first play — releasing ${rd}.\n\n[2–3 sentences: what the song is about, how it came to be, what makes it stand out]\n\nStreaming: [LINK]\nPresave: [PRESAVE LINK]\n\nThanks!\nAlistair`},
+  {k:'spotify-ed',lbl:'Spotify: editorial pitch',when:'4 weeks before',sub:s=>`Editorial consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\n"${s}" releases ${rd} — submitting for editorial playlist consideration.\n\n[Genre, mood, theme, who it's for]\n\nPrevious placements: [LIST]\nSpotify for Artists: [LINK]\n\nThanks!\nAlistair`},
+  {k:'radio',lbl:'Radio pitch',when:'1 week before',sub:s=>`Music submission — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nSubmitting "${s}" for airplay consideration — out ${rd}.\n\n[Why it fits your station — 2 sentences]\n\nMP3: [LINK] | Streaming: [LINK] | Press kit: [LINK]\n\nThanks for listening!\nAlistair`},
+  {k:'blog',lbl:'Blog / press pitch',when:'1 week before',sub:s=>`Press feature — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nReaching out about "${s}", releasing ${rd}, to explore a feature or premiere.\n\n[What it's about, story behind it, what makes it stand out]\n\nHappy to provide an exclusive stream, interview, or extra content.\n\nStreaming: [LINK] | Press kit: [LINK]\n\nThanks!\nAlistair`},
+  {k:'playlist',lbl:'Playlist pitch',when:'1 week before',sub:s=>`Playlist submission — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\nLong-time fan of your curation — putting "${s}" forward. Out ${rd}.\n\n[Why it fits your playlist — 1–2 sentences]\n\nSpotify: [LINK]\n\nThanks!\nAlistair`},
+  {k:'industry',lbl:'Industry email',when:'1 week before',sub:s=>`New release — "${s}" — Alistair`,body:(s,rd)=>`Hi [Name],\n\nHope you're well! "${s}" is out ${rd} and I wanted you to hear it.\n\n[Personal note — how you know them, why you're sharing]\n[2 sentences about the song]\n\nWould love your thoughts: [LINK]\n\nCheers,\nAlistair`},
+  {k:'jjj-review',lbl:'Triple j: review pitch',when:'Release day',sub:s=>`Review consideration — "${s}" — Alistair`,body:(s,rd)=>`Hi,\n\n"${s}" came out ${rd} and I'd love to put it forward for a triple j review.\n\n[What the song is about, emotional core, what makes it stand out]\n\nStreaming: [LINK] | Unearthed: [LINK]\n\nThank you!\nAlistair`},
+  {k:'fans',lbl:'Mailing list to fans',when:'Release day',sub:s=>`New single out now — "${s}"`,body:(s,rd)=>`Hi [Name],\n\n"${s}" is out now!\n\n[What it's about — personal note to connect with the reader]\n\nListen here: [LINK]\n\n[CTA — follow on Spotify, presave next song, etc.]\n\nThank you!\nAlistair`},
+];
+
+// STATE
+let state={patches:{},extras:[],ts:'',td:'',view:'catalogue',selId:null,songTab:'overview',q:'',openEmails:{},openTx:{},addOpen:false};
+
+function load(){try{const d=localStorage.getItem('daphnie-hub-v1');if(d){const p=JSON.parse(d);Object.assign(state,p);}}catch(e){}}
+function save(){try{localStorage.setItem('daphnie-hub-v1',JSON.stringify({patches:state.patches,extras:state.extras,ts:state.ts,td:state.td}));}catch(e){}}
+
+function getSongs(){return[...BS,...state.extras].map(s=>({...s,...(state.patches[s.id]||{}),baseExp:s.baseExp,baseEarn:s.baseEarn,collabs:s.collabs}));}
+
+function calcTotals(s){
+  const expTx=(s.expTx||[]).reduce((a,t)=>a+parseFloat(t.amount||0),0);
+  const earnTx=(s.earnTx||[]).reduce((a,t)=>a+parseFloat(t.amount||0),0);
+  const totalExp=(s.baseExp||0)+expTx;
+  const totalEarn=(s.baseEarn||0)+earnTx;
+  const dist=s.dist||20;
+  const net=totalEarn*(1-dist/100);
+  const pool=net-totalExp;
+  const pct=totalExp>0?Math.min(100,Math.round(net/totalExp*100)):100;
+  return{totalExp,totalEarn,net,pool,recouped:pool>=0,pct,expTx,earnTx};
+}
+
+function patch(id,field,val){
+  if(!state.patches[id])state.patches[id]={};
+  state.patches[id][field]=val;
+  save();render();
+}
+
+function addTx(id,txKey,tx){
+  if(!state.patches[id])state.patches[id]={};
+  if(!state.patches[id][txKey])state.patches[id][txKey]=[];
+  state.patches[id][txKey].push(tx);
+  save();render();
+}
+
+function delTx(id,txKey,txId){
+  state.patches[id][txKey]=state.patches[id][txKey].filter(t=>t.id!==txId);
+  save();render();
+}
+
+function uid(){return Math.random().toString(36).slice(2,9);}
+
+function fmtRD(str){if(!str)return'[release date]';return new Date(str+'T00:00:00').toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function fmtD(str,days){if(!str)return'—';const d=new Date(str+'T00:00:00');d.setDate(d.getDate()+days);return d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});}
+function today0(){const d=new Date();d.setHours(0,0,0,0);return d;}
+
+function copyText(txt,btnId){
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.getElementById(btnId);if(!b)return;
+    const orig=b.textContent;b.textContent='✓ Copied';b.style.color='var(--green)';
+    setTimeout(()=>{b.textContent=orig;b.style.color='';},2000);
+  }).catch(()=>{});
+}
+
+function exportCSV(){
+  const songs=getSongs();
+  const rows=[['Title','ISRC','UPC','Distro%','Hist. Expenses','New Expenses','Hist. Income','New Income','Total Expenses','Total Earnings','Net After Distro','Recouped','Collaborators']];
+  songs.forEach(s=>{
+    const{totalExp,totalEarn,net,recouped,expTx,earnTx}=calcTotals(s);
+    rows.push([s.title,s.isrc||'',s.upc||'',s.dist||20,(s.baseExp||0).toFixed(2),expTx.toFixed(2),(s.baseEarn||0).toFixed(2),earnTx.toFixed(2),totalExp.toFixed(2),totalEarn.toFixed(2),net.toFixed(2),recouped?'Yes':'No',s.collabs.filter(c=>c.n!=='Alistair Hayes').map(c=>`${c.n} M:${c.m}% P:${c.p}%`).join('; ')]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='daphnie-splits.csv';a.click();
+}
+
+// ---- RENDER FUNCTIONS ----
+
+function renderNav(){
+  const nav=document.getElementById('nav');
+  const songs=getSongs();
+  const sections=[
+    {icon:'ti-layout-grid',label:'Catalogue',view:'catalogue'},
+    {icon:'ti-tools',label:'Release Tools',view:'tools'},
+  ];
+  let html=`<div class="nav-section">Navigation</div>`;
+  sections.forEach(s=>{
+    html+=`<button class="nav-btn${state.view===s.view?' active':''}" onclick="go('${s.view}')"><i class="ti ${s.icon}"></i>${s.label}</button>`;
+  });
+  html+=`<div class="nav-section" style="margin-top:8px;">Songs</div>`;
+  songs.forEach(s=>{
+    const active=state.view==='song'&&state.selId===s.id;
+    const short=s.title.length>22?s.title.slice(0,21)+'…':s.title;
+    html+=`<div class="nav-song${active?' active':''}" onclick="openSong('${s.id}')" title="${s.title}">${short}</div>`;
+  });
+  nav.innerHTML=html;
+}
+
+function go(view){state.view=view;render();}
+function openSong(id){state.selId=id;state.view='song';state.songTab='overview';render();}
+
+function renderCatalogue(){
+  const songs=getSongs();
+  const filtered=songs.filter(s=>!state.q||s.title.toLowerCase().includes(state.q.toLowerCase())||s.collabs.some(c=>c.n.toLowerCase().includes(state.q.toLowerCase())));
+  const totalInvested=songs.reduce((a,s)=>a+calcTotals(s).totalExp,0);
+  const splitsActive=songs.filter(s=>calcTotals(s).recouped).length;
+
+  let html=`
+    <div class="page-title">Catalogue</div>
+    <div class="page-sub">${songs.length} songs · All recoupment data</div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-label">Songs</div><div class="stat-value">${songs.length}</div></div>
+      <div class="stat"><div class="stat-label">Total Invested</div><div class="stat-value amber">$${totalInvested.toLocaleString('en-AU',{maximumFractionDigits:0})}</div></div>
+      <div class="stat"><div class="stat-label">Splits Active</div><div class="stat-value green">${splitsActive}</div></div>
+    </div>
+    <div class="search-row">
+      <input placeholder="Search songs or collaborators…" value="${state.q}" oninput="state.q=this.value;render();" />
+    </div>`;
+
+  filtered.forEach(s=>{
+    const{recouped,pct}=calcTotals(s);
+    const others=s.collabs.filter(c=>c.n!=='Alistair Hayes');
+    const fillColor=recouped?'var(--green)':'var(--text3)';
+    html+=`
+      <div class="song-row" onclick="openSong('${s.id}')">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+          <div style="flex:1;min-width:0;margin-right:10px;">
+            <div class="song-row-title">${s.title}</div>
+            <div class="song-row-sub">${others.length?others.map(c=>c.n).join(', '):'Solo'}</div>
+          </div>
+          <span class="badge ${recouped?'green':'gray'}">${recouped?'Splits active':`${pct}%`}</span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${pct}%;background:${fillColor};"></div></div>
+      </div>`;
+  });
+
+  // Add song button / form
+  if(!state.addOpen){
+    html+=`<button class="btn btn-ghost" onclick="state.addOpen=true;render();" style="width:100%;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;border-style:dashed;padding:10px;">
+      <i class="ti ti-plus" style="font-size:14px;"></i> Add new song
+    </button>`;
+  } else {
+    html+=`<div class="add-form">
+      <div class="add-form-title">Add new song</div>
+      <div class="field"><label>Song title</label><input id="af-title" placeholder="Song title" /></div>
+      <div class="field"><label>Collaborator name (optional)</label><input id="af-cn" placeholder="e.g. Harry Patrick" oninput="render2('af-collab-fields',renderAddCollabFields)" /></div>
+      <div id="af-collab-fields"></div>
+      <div class="field-row col2 field">
+        <div><label>Distro %</label><input id="af-dist" type="number" min="10" max="50" value="20" /></div>
+        <div><label>Opening expenses ($)</label><input id="af-exp" type="number" min="0" value="0" /></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="submitAddSong()">Add song</button>
+        <button class="btn btn-ghost" onclick="state.addOpen=false;render();">Cancel</button>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('main').innerHTML=html;
+}
+
+function renderAddCollabFields(){
+  const cn=document.getElementById('af-cn');
+  if(!cn||!cn.value.trim())return'';
+  return`<div class="field-row col2 field">
+    <div><label>Master split % (${cn.value})</label><input id="af-cm" type="number" min="0" max="100" value="50" /></div>
+    <div><label>Publishing split % (${cn.value})</label><input id="af-cp" type="number" min="0" max="100" value="50" /></div>
+  </div>`;
+}
+
+function render2(id,fn){const el=document.getElementById(id);if(el)el.innerHTML=fn();}
+
+function submitAddSong(){
+  const title=(document.getElementById('af-title')||{}).value||'';
+  if(!title.trim())return;
+  const cn=((document.getElementById('af-cn')||{}).value||'').trim();
+  const cm=parseFloat((document.getElementById('af-cm')||{}).value||0);
+  const cp=parseFloat((document.getElementById('af-cp')||{}).value||0);
+  const dist=parseFloat((document.getElementById('af-dist')||{}).value||20);
+  const exp=parseFloat((document.getElementById('af-exp')||{}).value||0);
+  const id='ns-'+Date.now();
+  const collabs=[{n:'Alistair Hayes',m:cn?100-cm:100,p:cn?100-cp:100}];
+  if(cn)collabs.push({n:cn,m:cm,p:cp});
+  state.extras.push({id,title:title.trim(),collabs,dist,baseExp:exp,baseEarn:0,paid:0,isrc:'',upc:''});
+  state.addOpen=false;save();
+  openSong(id);
+}
+
+function renderSong(){
+  const songs=getSongs();
+  const s=songs.find(x=>x.id===state.selId);
+  if(!s){go('catalogue');return;}
+  const{totalExp,totalEarn,net,pool,recouped,pct,expTx,earnTx}=calcTotals(s);
+  const others=s.collabs.filter(c=>c.n!=='Alistair Hayes');
+
+  const tabs=['overview','expenses','income','splits'];
+  const tabLabels={overview:'Overview',expenses:'Expenses',income:'Income',splits:'Splits'};
+
+  let html=`
+    <button class="back-btn" onclick="go('catalogue')"><i class="ti ti-arrow-left" style="font-size:13px;"></i> Catalogue</button>
+    <div class="page-title">${s.title}</div>
+    <div class="page-sub">${others.length?'with '+others.map(c=>c.n).join(', '):'Solo'}</div>
+    <div class="tabs">
+      ${tabs.map(t=>`<button class="tab-btn${state.songTab===t?' active':''}" onclick="state.songTab='${t}';render();">${tabLabels[t]}</button>`).join('')}
+    </div>`;
+
+  if(state.songTab==='overview'){
+    html+=`
+      <div class="field-row col2 field">
+        <div><label>ISRC</label><input value="${s.isrc||''}" placeholder="AU-ABC-23-00001" oninput="patch('${s.id}','isrc',this.value)" /></div>
+        <div><label>UPC</label><input value="${s.upc||''}" placeholder="006024458349" oninput="patch('${s.id}','upc',this.value)" /></div>
+      </div>
+      <div class="dist-box">
+        <div class="dist-top">
+          <span style="font-size:12px;color:var(--text2);">Distro cut</span>
+          <span class="dist-pct">${s.dist||20}%</span>
+        </div>
+        <input type="range" min="10" max="50" step="5" value="${s.dist||20}" oninput="patch('${s.id}','dist',+this.value)" style="width:100%;" />
+        <div class="slider-labels"><span>10%</span><span>20% default</span><span>50% if invested</span></div>
+      </div>
+      <div class="grid2">
+        <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">After distro (${s.dist||20}%)</div><div class="mini-stat-value">$${net.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Net pool</div><div class="mini-stat-value" style="color:${pool>=0?'var(--green)':'var(--red)'};">${pool>=0?'+ ':'− '}$${Math.abs(pool).toFixed(2)}</div></div>
+      </div>
+      <div class="recoup-box ${recouped?'recouped':'pending'}">
+        <span style="font-size:13px;font-weight:500;color:${recouped?'var(--green)':'var(--text2)'};">
+          ${recouped?'✓ Splits active — payouts unlocked':`Recouping — ${pct}% there`}
+        </span>
+        ${!recouped?`<span style="font-size:12px;color:var(--text3);font-family:var(--mono);">$${Math.abs(pool).toFixed(2)} to go</span>`:''}
+      </div>
+      <div class="bar" style="height:5px;margin-bottom:20px;">
+        <div class="bar-fill" style="width:${pct}%;background:${recouped?'var(--green)':'var(--text3)'};" ></div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="state.ts='${s.title.replace(/'/g,"\\'")}';state.view='tools';render();">
+        Open in release tools ↗
+      </button>`;
+  }
+
+  if(state.songTab==='expenses'){
+    html+=`
+      <div class="grid2">
+        <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value">$${(s.baseExp||0).toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--red);">$${expTx.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Total expenses</div><div class="mini-stat-value">$${totalExp.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Total paid to collabs</div><div class="mini-stat-value">$${(s.paid||0).toFixed(2)}</div></div>
+      </div>
+      ${renderTxSection(s,'expTx','New expense transactions')}`;
+  }
+
+  if(state.songTab==='income'){
+    html+=`
+      <div class="grid2">
+        <div class="mini-stat"><div class="mini-stat-label">Historical (spreadsheet)</div><div class="mini-stat-value" style="color:var(--green);">$${(s.baseEarn||0).toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">New transactions</div><div class="mini-stat-value" style="color:var(--green);">+$${earnTx.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Total earnings</div><div class="mini-stat-value" style="color:var(--green);">$${totalEarn.toFixed(2)}</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Net after distro</div><div class="mini-stat-value">$${net.toFixed(2)}</div></div>
+      </div>
+      ${renderTxSection(s,'earnTx','New income transactions')}`;
+  }
+
+  if(state.songTab==='splits'){
+    html+=`<div class="tbl-wrap"><table class="tbl"><thead><tr>
+      <th>Collaborator</th><th>Master</th><th>Publishing</th><th>${recouped&&others.length?'Owed from pool':'When recouped'}</th>
+    </tr></thead><tbody>`;
+    s.collabs.forEach(c=>{
+      const owed=recouped&&c.n!=='Alistair Hayes'?pool*c.m/100:null;
+      html+=`<tr>
+        <td style="font-weight:${c.n==='Alistair Hayes'?'500':'400'};">${c.n}</td>
+        <td style="font-family:var(--mono);">${c.m}%</td>
+        <td style="font-family:var(--mono);">${c.p}%</td>
+        <td style="font-family:var(--mono);color:${owed&&owed>0?'var(--red)':'var(--text3)'};">${c.n==='Alistair Hayes'?'—':owed!==null?'$'+owed.toFixed(2):'—'}</td>
+      </tr>`;
+    });
+    html+=`</tbody></table></div>
+      <div class="field"><label>Total paid to collaborators ($)</label>
+        <input type="number" step="0.01" min="0" value="${s.paid||0}" oninput="patch('${s.id}','paid',parseFloat(this.value)||0)" />
+      </div>`;
+  }
+
+  document.getElementById('main').innerHTML=html;
+}
+
+function renderTxSection(s,txKey,title){
+  const items=(s[txKey]||[]);
+  const total=items.reduce((a,t)=>a+parseFloat(t.amount||0),0);
+  const isOpen=state.openTx[s.id+txKey];
+  const isIncome=txKey==='earnTx';
+  const color=isIncome?'var(--green)':'var(--red)';
+  let html=`<div class="tx-section">
+    <div class="tx-header${isOpen?' open':''}" onclick="state.openTx['${s.id+txKey}']=!state.openTx['${s.id+txKey}'];render();">
+      <span style="font-size:13px;font-weight:500;color:var(--text);">${title}</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:500;font-family:var(--mono);color:${color};">${isIncome?'+':'-'}$${total.toFixed(2)}</span>
+        <i class="ti ti-chevron-${isOpen?'up':'down'}" style="font-size:13px;color:var(--text3);"></i>
+      </div>
+    </div>`;
+  if(isOpen){
+    html+=`<div class="tx-body">`;
+    if(!items.length)html+=`<div style="font-size:12px;color:var(--text3);margin-bottom:10px;">No new transactions yet — historical figures from spreadsheet.</div>`;
+    items.forEach(t=>{
+      html+=`<div class="tx-row">
+        <div>
+          <div class="tx-desc">${t.source?`<span style="color:var(--text3);">${t.source} — </span>`:''} ${t.desc||'—'}</div>
+          <div class="tx-meta">${t.date}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="tx-amount" style="color:${color};">${isIncome?'+':'-'}$${parseFloat(t.amount).toFixed(2)}</span>
+          <button class="tx-del" onclick="delTx('${s.id}','${txKey}','${t.id}')">×</button>
+        </div>
+      </div>`;
+    });
+    const fid=s.id+txKey;
+    html+=`<div class="tx-add-form">
+      ${isIncome?`<input id="tf-src-${fid}" placeholder="Source (e.g. Gyrostream, Bandcamp, Mandatory…)" style="margin-bottom:7px;" />`:''}
+      <input id="tf-desc-${fid}" placeholder="${isIncome?'Description (e.g. Royalties Q1 2026)':'Description (e.g. Mix + master)'}" style="margin-bottom:7px;" />
+      <div class="field-row col2" style="margin-bottom:7px;">
+        <input id="tf-amt-${fid}" type="number" step="0.01" min="0" placeholder="Amount ($)" />
+        <input id="tf-date-${fid}" type="date" value="${new Date().toISOString().slice(0,10)}" />
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="submitTx('${s.id}','${txKey}','${fid}')">+ Add ${isIncome?'income':'expense'}</button>
+    </div></div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function submitTx(songId,txKey,fid){
+  const amt=parseFloat((document.getElementById('tf-amt-'+fid)||{}).value||0);
+  if(!amt||isNaN(amt))return;
+  const desc=(document.getElementById('tf-desc-'+fid)||{}).value||'';
+  const date=(document.getElementById('tf-date-'+fid)||{}).value||new Date().toISOString().slice(0,10);
+  const src=(document.getElementById('tf-src-'+fid)||{}).value||'';
+  addTx(songId,txKey,{id:uid(),desc,amount:amt,date,source:src});
+}
+
+function renderTools(){
+  const sn=state.ts||'[song name]';
+  const rd=fmtRD(state.td);
+  let html=`
+    <div class="page-title">Release Tools</div>
+    <div class="page-sub">Date calculator · Email generator</div>
+    <div class="field-row col2 field" style="margin-bottom:24px;">
+      <div><label>Song name</label><input value="${state.ts}" placeholder="Song name" oninput="state.ts=this.value;save();render();" /></div>
+      <div><label>Release date</label><input type="date" value="${state.td}" oninput="state.td=this.value;save();render();" /></div>
+    </div>`;
+
+  if(state.td){
+    const today=today0();
+    html+=`<div style="margin-bottom:24px;">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;">Release Timeline</div>`;
+    ML.forEach(m=>{
+      const dt=new Date(state.td+'T00:00:00');dt.setDate(dt.getDate()+m.d);
+      const isPast=dt<today,isToday=dt.toDateString()===today.toDateString(),isRel=m.d===0;
+      const bg=isRel?'var(--green-bg)':isToday?'var(--blue-bg)':'transparent';
+      const border=isRel?`border:0.5px solid var(--green-border);`:isToday?`border:0.5px solid var(--border2);`:'';
+      const lc=isRel?'var(--green)':isToday?'var(--blue)':'var(--text)';
+      html+=`<div class="tl-row" style="background:${bg};${border}opacity:${isPast&&!isToday?0.4:1};">
+        <span class="tl-label" style="color:${lc};">${m.l}</span>
+        <span class="tl-date">${dt.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;">Email Drafts</div>`;
+  EMAILS.forEach(em=>{
+    const sub=em.sub(sn),body=em.body(sn,rd);
+    const txt=`Subject: ${sub}\n\n${body}`;
+    const isOpen=state.openEmails[em.k];
+    const btnId=`copy-${em.k}`;
+    html+=`<div class="email-item">
+      <div class="email-header${isOpen?' open':''}" onclick="state.openEmails['${em.k}']=!state.openEmails['${em.k}'];render();">
+        <div>
+          <div class="email-title">${em.lbl}</div>
+          <div class="email-when">${em.when}</div>
+        </div>
+        <i class="ti ti-chevron-${isOpen?'up':'down'}" style="font-size:14px;color:var(--text3);"></i>
+      </div>`;
+    if(isOpen){
+      html+=`<div class="email-body">
+        <div class="email-subject"><span style="color:var(--text);font-weight:500;">Subject: </span>${sub}</div>
+        <pre class="email-pre">${body}</pre>
+        <button id="${btnId}" class="btn btn-ghost btn-sm" onclick="copyText(${JSON.stringify(txt)},'${btnId}')">Copy email</button>
+      </div>`;
+    }
+    html+=`</div>`;
+  });
+
+  document.getElementById('main').innerHTML=html;
+}
+
+function render(){
+  renderNav();
+  if(state.view==='catalogue')renderCatalogue();
+  else if(state.view==='song')renderSong();
+  else if(state.view==='tools')renderTools();
+}
+
+load();render();
+</script>
+</body>
+</html>
